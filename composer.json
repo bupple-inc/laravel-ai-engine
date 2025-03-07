@@ -1,12 +1,12 @@
 {
-  "name": "bupple/laravel-engine",
+  "name": "bupple/laravel-ai-engine",
   "description": "Bupple Engine AI Engine for Laravel",
   "type": "library",
   "license": "MIT",
-  "homepage": "https://github.com/bupple-inc/laravel-engine",
+  "homepage": "https://github.com/bupple-inc/laravel-ai-engine",
   "support": {
-    "issues": "https://github.com/bupple-inc/laravel-engine/issues",
-    "source": "https://github.com/bupple-inc/laravel-engine"
+    "issues": "https://github.com/bupple-inc/laravel-ai-engine/issues",
+    "source": "https://github.com/bupple-inc/laravel-ai-engine"
   },
   "autoload": {
     "psr-4": {
