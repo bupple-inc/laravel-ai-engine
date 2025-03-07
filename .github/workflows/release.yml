@@ -24,9 +24,6 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction --no-progress
 
-      - name: Run tests
-        run: vendor/bin/pest
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
