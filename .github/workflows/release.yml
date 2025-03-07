@@ -45,5 +45,5 @@ jobs:
           PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
         run: |
           curl -XPOST -H "Authorization: Bearer ${PACKAGIST_TOKEN}" \
-          https://packagist.org/api/update-package?username=bupple \
+          https://packagist.org/api/update-package?username=fozooni \
           -d '{"repository":{"url":"https://packagist.org/packages/bupple/engine"}}'
