@@ -43,4 +43,4 @@ jobs:
         run: |
           curl -XPOST -H "Authorization: Bearer ${PACKAGIST_TOKEN}" \
           https://packagist.org/api/update-package?username=fozooni \
-          -d '{"repository":{"url":"https://packagist.org/packages/bupple/engine"}}'
+          -d '{"repository":{"url":"https://packagist.org/packages/bupple/laravel-ai-engine"}}'
