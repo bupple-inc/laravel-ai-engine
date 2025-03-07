@@ -1,6 +1,6 @@
 {
   "name": "bupple/laravel-ai-engine",
-  "description": "Bupple Engine AI Engine for Laravel",
+  "description": "Bupple AI Engine for Laravel (Laravel 10, 11, 12)",
   "type": "library",
   "license": "MIT",
   "homepage": "https://github.com/bupple-inc/laravel-ai-engine",
