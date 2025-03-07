@@ -7,7 +7,7 @@ A PHP package that provides the Bupple Engine service with Laravel support, feat
 You can install the package via composer:
 
 ```bash
-composer require bupple/engine
+composer require bupple/laravel-ai-engine
 ```
 
 ## Configuration
