@@ -1,6 +1,6 @@
 {
-  "name": "bupple/engine",
-  "description": "Bupple Engine Service with Laravel Support",
+  "name": "bupple/laravel-engine",
+  "description": "Bupple Engine AI Engine for Laravel",
   "type": "library",
   "license": "MIT",
   "homepage": "https://github.com/bupple-inc/laravel-engine",
@@ -20,8 +20,12 @@
   },
   "authors": [
     {
-      "name": "Bupple Inc",
-      "email": "dev@bupple.com"
+      "name": "Ahmad Fozooni",
+      "email": "fozooni.me@gmail.com"
+    },
+    {
+      "name": "Arman Sohi",
+      "email": "arman@bupple.io"
     }
   ],
   "require": {
