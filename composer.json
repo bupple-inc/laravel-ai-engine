@@ -1,0 +1,65 @@
+{
+  "name": "bupple/engine",
+  "description": "Bupple Engine Service with Laravel Support",
+  "type": "library",
+  "license": "MIT",
+  "homepage": "https://github.com/bupple-inc/laravel-engine",
+  "support": {
+    "issues": "https://github.com/bupple-inc/laravel-engine/issues",
+    "source": "https://github.com/bupple-inc/laravel-engine"
+  },
+  "autoload": {
+    "psr-4": {
+      "Bupple\\Engine\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Bupple\\Engine\\Tests\\": "tests/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Bupple Inc",
+      "email": "dev@bupple.com"
+    }
+  ],
+  "require": {
+    "php": "^8.1|^8.2|^8.3",
+    "ext-json": "*",
+    "illuminate/database": "^10.0|^11.0|^12.0",
+    "illuminate/support": "^10.0|^11.0|^12.0",
+    "guzzlehttp/guzzle": "^7.0"
+  },
+  "require-dev": {
+    "laravel/framework": "^10.0|^11.0|^12.0",
+    "pestphp/pest": "^2.0",
+    "pestphp/pest-plugin-laravel": "^2.0",
+    "orchestra/testbench": "^8.0|^9.0"
+  },
+  "suggest": {
+    "mongodb/laravel-mongodb": "^5.0 For MongoDB support"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Bupple\\Engine\\Providers\\BuppleEngineServiceProvider"
+      ],
+      "aliases": {
+        "BuppleEngine": "Bupple\\Engine\\Facades\\BuppleEngine"
+      }
+    }
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "scripts": {
+    "test": "pest",
+    "test-coverage": "pest --coverage"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
