@@ -26,3 +26,10 @@ All notable changes to `bupple/engine` will be documented in this file.
 
 ### Added
 - Some changes
+
+## [Released]
+
+## [1.0.3] - 2024-03-07
+
+### Added
+- Some changes
