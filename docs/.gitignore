@@ -7,9 +7,6 @@ node_modules
 .vitepress/dist
 .vitepress/cache
 
-# Production
-/dist
-
 # Local env files
 .env
 .env.local
