@@ -15,7 +15,7 @@ class BuppleEngineServiceProvider extends ServiceProvider implements DeferrableP
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/bupple.php', 'bupple');
+        $this->mergeConfigFrom(__DIR__ . '/../config/bupple-engine.php', 'bupple');
 
         $this->app->singleton(MemoryManager::class, function ($app) {
             return new MemoryManager($app['config']->get('bupple.memory', []));
@@ -53,7 +53,7 @@ class BuppleEngineServiceProvider extends ServiceProvider implements DeferrableP
     protected function publishConfig(): void
     {
         $this->publishes([
-            __DIR__ . '/../config/bupple.php' => config_path('bupple.php'),
+            __DIR__ . '/../config/bupple-engine.php' => config_path('bupple-engine.php'),
         ], 'bupple-config');
     }
 
