@@ -13,13 +13,13 @@ export default {
     nav: [
       { text: 'Home', link: '/' },
       { 
-        text: 'v0.1.0', 
+        text: '0.1.0', 
         items: [
-          { text: 'v0.1.0 (Current)', link: '/v/v0.1.0/guide/getting-started/introduction' },
-          { text: 'Release Notes', link: '/v/v0.1.0/release-notes' }
+          { text: 'v0.1.0 (Current)', link: '/v/0.1.0/guide/getting-started/introduction' },
+          { text: 'Release Notes', link: '/v/0.1.0/release-notes' }
         ]
       },
-      { text: 'API Reference', link: '/v/v0.1.0/api/overview' },
+      { text: 'API Reference', link: '/v/0.1.0/api/overview' },
       { text: 'Changelog', link: '/changelogs' },
       { 
         text: 'Links',
@@ -30,49 +30,49 @@ export default {
       }
     ],
     sidebar: {
-      '/v/v0.1.0/': [
+      '/v/0.1.0/': [
         {
           text: 'Getting Started',
           items: [
-            { text: 'Introduction', link: '/v/v0.1.0/guide/getting-started/introduction' },
-            { text: 'Installation', link: '/v/v0.1.0/guide/getting-started/installation' },
-            { text: 'Configuration', link: '/v/v0.1.0/guide/getting-started/configuration' }
+            { text: 'Introduction', link: '/v/0.1.0/guide/getting-started/introduction' },
+            { text: 'Installation', link: '/v/0.1.0/guide/getting-started/installation' },
+            { text: 'Configuration', link: '/v/0.1.0/guide/getting-started/configuration' }
           ]
         },
         {
           text: 'Core Concepts',
           items: [
-            { text: 'AI Providers', link: '/v/v0.1.0/guide/core/ai-providers' },
-            { text: 'Memory Management', link: '/v/v0.1.0/guide/core/memory-management' },
-            { text: 'Streaming', link: '/v/v0.1.0/guide/core/streaming' }
+            { text: 'AI Providers', link: '/v/0.1.0/guide/core/ai-providers' },
+            { text: 'Memory Management', link: '/v/0.1.0/guide/core/memory-management' },
+            { text: 'Streaming', link: '/v/0.1.0/guide/core/streaming' }
           ]
         },
         {
           text: 'Advanced Topics',
           items: [
-            { text: 'Error Handling', link: '/v/v0.1.0/guide/advanced/error-handling' },
-            { text: 'Best Practices', link: '/v/v0.1.0/guide/advanced/best-practices' }
+            { text: 'Error Handling', link: '/v/0.1.0/guide/advanced/error-handling' },
+            { text: 'Best Practices', link: '/v/0.1.0/guide/advanced/best-practices' }
           ]
         },
         {
           text: 'API Reference',
           items: [
-            { text: 'Overview', link: '/v/v0.1.0/api/overview' },
+            { text: 'Overview', link: '/v/0.1.0/api/overview' },
             {
               text: 'Interfaces',
               collapsed: false,
               items: [
-                { text: 'AI Interface', link: '/v/v0.1.0/api/interfaces/ai-interface' },
-                { text: 'Memory Interface', link: '/v/v0.1.0/api/interfaces/memory-interface' }
+                { text: 'AI Interface', link: '/v/0.1.0/api/interfaces/ai-interface' },
+                { text: 'Memory Interface', link: '/v/0.1.0/api/interfaces/memory-interface' }
               ]
             },
             {
               text: 'Providers',
               collapsed: false,
               items: [
-                { text: 'OpenAI', link: '/v/v0.1.0/api/providers/openai' },
-                { text: 'Gemini', link: '/v/v0.1.0/api/providers/gemini' },
-                { text: 'Claude', link: '/v/v0.1.0/api/providers/claude' }
+                { text: 'OpenAI', link: '/v/0.1.0/api/providers/openai' },
+                { text: 'Gemini', link: '/v/0.1.0/api/providers/gemini' },
+                { text: 'Claude', link: '/v/0.1.0/api/providers/claude' }
               ]
             }
           ]
