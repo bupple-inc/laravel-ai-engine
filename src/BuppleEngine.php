@@ -58,6 +58,31 @@ class BuppleEngine
     }
 
     /**
+     * Get a chat driver instance.
+     *
+     * @param string|null $name
+     * @return ChatDriverInterface
+     */
+    public function ai(?string $name = null): ChatDriverInterface
+    {
+        $name = $name ?? $this->getDefaultChatDriver();
+
+        if (!isset($this->chatDrivers[$name])) {
+            $this->chatDrivers[$name] = $this->createChatDriver($name);
+        }
+
+        return $this->chatDrivers[$name];
+    }
+
+    /**
+     * Alias for ai() method for backward compatibility.
+     */
+    public function chat(?string $name = null): ChatDriverInterface
+    {
+        return $this->ai($name);
+    }
+
+    /**
      * Get the SSE driver instance.
      */
     public function sse(): SseDriver
@@ -83,9 +108,6 @@ class BuppleEngine
 
     /**
      * Parse JSON string.
-     *
-     * @param string $json
-     * @return array|null
      */
     public function jsonParser(string $json): ?array
     {
@@ -104,27 +126,7 @@ class BuppleEngine
     }
 
     /**
-     * Get a chat driver instance.
-     *
-     * @param string|null $name
-     * @return ChatDriverInterface
-     * @throws \InvalidArgumentException|\RuntimeException
-     */
-    public function chat(?string $name = null): ChatDriverInterface
-    {
-        $name = $name ?? $this->getDefaultChatDriver();
-
-        if (!isset($this->chatDrivers[$name])) {
-            $this->chatDrivers[$name] = $this->createChatDriver($name);
-        }
-
-        return $this->chatDrivers[$name];
-    }
-
-    /**
      * Get the default chat driver name.
-     *
-     * @return string
      */
     protected function getDefaultChatDriver(): string
     {
@@ -133,10 +135,6 @@ class BuppleEngine
 
     /**
      * Create a new chat driver instance.
-     *
-     * @param string $driver
-     * @return ChatDriverInterface
-     * @throws \InvalidArgumentException|\RuntimeException
      */
     protected function createChatDriver(string $driver): ChatDriverInterface
     {
@@ -152,10 +150,6 @@ class BuppleEngine
 
     /**
      * Get the configuration.
-     *
-     * @param string|null $key
-     * @param mixed $default
-     * @return mixed
      */
     public function config(?string $key = null, mixed $default = null): mixed
     {

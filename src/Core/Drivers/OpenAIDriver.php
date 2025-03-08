@@ -2,80 +2,141 @@
 
 namespace Bupple\Engine\Core\Drivers;
 
+use Bupple\Engine\Core\Drivers\Contracts\ChatDriverInterface;
 use Bupple\Engine\Core\Memory\OpenAIMemoryDriver;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-class OpenAIDriver extends AbstractChatDriver
+class OpenAIDriver implements ChatDriverInterface
 {
-    protected function getBaseUri(): string
-    {
-        return 'https://api.openai.com/v1/';
-    }
+    /**
+     * The configuration array.
+     */
+    protected array $config;
 
-    protected function getHeaders(): array
-    {
-        return [
-            'Authorization' => 'Bearer ' . $this->config['api_key'],
-            'Content-Type' => 'application/json',
-        ];
-    }
+    /**
+     * The HTTP client instance.
+     */
+    protected Client $client;
 
-    public function chat(array $messages, array $options = []): array
+    /**
+     * Create a new OpenAI driver instance.
+     */
+    public function __construct(array $config)
     {
-        try {
-            $response = $this->client->post('chat/completions', [
-                'json' => [
-                    'messages' => $this->formatMessages($messages),
-                    'model' => $options['model'] ?? $this->config['model'] ?? 'gpt-4',
-                    ...$this->formatOptions($options),
+        $this->config = $config;
+        $this->client = new Client([
+            'base_uri' => 'https://api.openai.com/v1/',
+            'headers' => [
+                'Authorization' => 'Bearer ' . ($config['api_key'] ?? env('OPENAI_API_KEY')),
+                'Content-Type' => 'application/json',
+            ],
+        ]);
+
+        if (isset($config['organization_id']) || env('OPENAI_ORGANIZATION_ID')) {
+            $this->client = new Client([
+                'base_uri' => 'https://api.openai.com/v1/',
+                'headers' => [
+                    'Authorization' => 'Bearer ' . ($config['api_key'] ?? env('OPENAI_API_KEY')),
+                    'OpenAI-Organization' => $config['organization_id'] ?? env('OPENAI_ORGANIZATION_ID'),
+                    'Content-Type' => 'application/json',
                 ],
             ]);
-
-            return json_decode($response->getBody()->getContents(), true);
-        } catch (GuzzleException $e) {
-            throw new \RuntimeException('OpenAI API error: ' . $e->getMessage());
         }
     }
 
-    public function stream(array $messages, array $options = []): \Generator
+    /**
+     * Send a message to OpenAI and get a response.
+     */
+    public function send(array $messages): array
     {
         try {
             $response = $this->client->post('chat/completions', [
                 'json' => [
-                    'messages' => $this->formatMessages($messages),
-                    'model' => $options['model'] ?? $this->config['model'] ?? 'gpt-4',
+                    'model' => $this->config['model'] ?? env('OPENAI_MODEL', 'gpt-4'),
+                    'messages' => $messages,
+                    'temperature' => (float) ($this->config['temperature'] ?? env('OPENAI_TEMPERATURE', 0.7)),
+                    'max_tokens' => (int) ($this->config['max_tokens'] ?? env('OPENAI_MAX_TOKENS', 1000)),
+                ],
+            ]);
+
+            $result = json_decode($response->getBody()->getContents(), true);
+
+            return [
+                'role' => $result['choices'][0]['message']['role'],
+                'content' => $result['choices'][0]['message']['content'],
+                'model' => $result['model'],
+                'usage' => $result['usage'] ?? null,
+            ];
+        } catch (GuzzleException $e) {
+            throw new \RuntimeException('OpenAI API request failed: ' . $e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
+    /**
+     * Stream a chat completion from OpenAI.
+     */
+    public function stream(array $messages): \Generator
+    {
+        try {
+            $response = $this->client->post('chat/completions', [
+                'json' => [
+                    'model' => $this->config['model'] ?? env('OPENAI_MODEL', 'gpt-4'),
+                    'messages' => $messages,
+                    'temperature' => (float) ($this->config['temperature'] ?? env('OPENAI_TEMPERATURE', 0.7)),
+                    'max_tokens' => (int) ($this->config['max_tokens'] ?? env('OPENAI_MAX_TOKENS', 1000)),
                     'stream' => true,
-                    ...$this->formatOptions($options),
                 ],
                 'stream' => true,
+                'read_timeout' => 0,
+                'http_errors' => true,
+                'headers' => [
+                    'Accept' => 'text/event-stream',
+                    'Cache-Control' => 'no-cache',
+                    'Connection' => 'keep-alive',
+                ],
+                'decode_content' => true,
+                'verify' => false
             ]);
 
-            $buffer = '';
-            $stream = $response->getBody();
-            while (!$stream->eof()) {
-                $line = $stream->read(1);
-                $buffer .= $line;
+            $stream = $response->getBody()->detach();
+            stream_set_blocking($stream, false);
 
-                if (str_ends_with($buffer, "\n")) {
-                    $events = explode("\n", $buffer);
-                    foreach ($events as $event) {
-                        if (str_starts_with($event, 'data: ')) {
-                            $data = substr($event, 6);
-                            if ($data === '[DONE]') {
-                                return;
-                            }
-                            $decoded = json_decode($data, true);
-                            if ($decoded && isset($decoded['choices'][0]['delta'])) {
-                                yield $decoded['choices'][0]['delta'];
-                            }
+            while (!feof($stream)) {
+                $line = fgets($stream);
+                if (!empty($line)) {
+                    $line = str_replace('data: ', '', trim($line));
+                    if ($line === '[DONE]') {
+                        break;
+                    }
+
+                    $data = json_decode($line, true);
+                    if ($data && isset($data['choices'][0]['delta']['content'])) {
+                        yield [
+                            'content' => $data['choices'][0]['delta']['content'],
+                            'model' => $data['model'] ?? null,
+                        ];
+                        if (function_exists('fastcgi_finish_request')) {
+                            fastcgi_finish_request();
+                        } else {
+                            flush();
+                            ob_flush();
                         }
                     }
-                    $buffer = '';
                 }
             }
+            fclose($stream);
         } catch (GuzzleException $e) {
-            throw new \RuntimeException('OpenAI API error: ' . $e->getMessage());
+            throw new \RuntimeException('OpenAI streaming request failed: ' . $e->getMessage(), $e->getCode(), $e);
         }
+    }
+
+    /**
+     * Get the driver's configuration.
+     */
+    public function getConfig(): array
+    {
+        return $this->config;
     }
 
     public function getMemoryDriver(mixed $parentModel): OpenAIMemoryDriver

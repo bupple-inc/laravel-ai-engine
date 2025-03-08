@@ -15,16 +15,14 @@ class BuppleEngineServiceProvider extends ServiceProvider implements DeferrableP
      */
     public function register(): void
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/bupple-engine.php', 'bupple');
-
         $this->app->singleton(MemoryManager::class, function ($app) {
-            return new MemoryManager($app['config']->get('bupple.memory', []));
+            return new MemoryManager($app['config']->get('bupple-engine.memory', []));
         });
 
         $this->app->singleton(BuppleEngine::class, function ($app) {
             return new BuppleEngine(
                 $app->make(MemoryManager::class),
-                $app['config']->get('bupple', [])
+                $app['config']->get('bupple-engine', [])
             );
         });
 
@@ -41,33 +39,14 @@ class BuppleEngineServiceProvider extends ServiceProvider implements DeferrableP
      */
     public function boot(): void
     {
-        if ($this->app->runningInConsole()) {
-            $this->publishConfig();
-            $this->publishMigrations();
-        }
-    }
-
-    /**
-     * Publish configuration file.
-     */
-    protected function publishConfig(): void
-    {
         $this->publishes([
             __DIR__ . '/../config/bupple-engine.php' => config_path('bupple-engine.php'),
-        ], 'bupple-config');
-    }
+        ]);
 
-    /**
-     * Publish migrations if not using MongoDB.
-     */
-    protected function publishMigrations(): void
-    {
         if (!config('bupple-engine.database.use_mongodb', false)) {
             $this->publishes([
                 __DIR__ . '/../database/migrations' => database_path('migrations'),
-            ], 'bupple-engine-migrations');
-
-            $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+            ]);
         }
     }
 

@@ -2,111 +2,148 @@
 
 namespace Bupple\Engine\Core\Drivers;
 
-use Bupple\Engine\Core\Memory\ClaudeMemoryDriver;
+use Bupple\Engine\Core\Drivers\Contracts\ChatDriverInterface;
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-class ClaudeDriver extends AbstractChatDriver
+class ClaudeDriver implements ChatDriverInterface
 {
-    protected function getBaseUri(): string
+    /**
+     * The configuration array.
+     */
+    protected array $config;
+
+    /**
+     * The HTTP client instance.
+     */
+    protected Client $client;
+
+    /**
+     * Create a new Claude driver instance.
+     */
+    public function __construct(array $config)
     {
-        return 'https://api.anthropic.com/v1/';
+        $this->config = $config;
+        $this->client = new Client([
+            'base_uri' => 'https://api.anthropic.com/v1/',
+            'headers' => [
+                'x-api-key' => $config['api_key'] ?? env('CLAUDE_API_KEY'),
+                'anthropic-version' => '2023-06-01',
+                'Content-Type' => 'application/json',
+            ],
+        ]);
     }
 
-    protected function getHeaders(): array
-    {
-        return [
-            'x-api-key' => $this->config['api_key'],
-            'anthropic-version' => '2023-06-01',
-            'Content-Type' => 'application/json',
-        ];
-    }
-
-    public function chat(array $messages, array $options = []): array
+    /**
+     * Send a message to Claude and get a response.
+     */
+    public function send(array $messages): array
     {
         try {
+            // Convert messages array to Claude format
+            $formattedMessages = $this->formatMessages($messages);
+
             $response = $this->client->post('messages', [
                 'json' => [
-                    'messages' => $this->formatMessages($messages),
-                    'model' => $options['model'] ?? $this->config['model'] ?? 'claude-3-opus-20240229',
-                    ...$this->formatOptions($options),
+                    'model' => $this->config['model'] ?? env('CLAUDE_MODEL', 'claude-3-opus-20240229'),
+                    'messages' => $formattedMessages,
+                    'temperature' => (float) ($this->config['temperature'] ?? env('CLAUDE_TEMPERATURE', 0.7)),
+                    'max_tokens' => (int) ($this->config['max_tokens'] ?? env('CLAUDE_MAX_TOKENS', 1000)),
                 ],
             ]);
 
-            return json_decode($response->getBody()->getContents(), true);
+            $result = json_decode($response->getBody()->getContents(), true);
+
+            return [
+                'role' => 'assistant',
+                'content' => $result['content'][0]['text'],
+                'model' => $result['model'],
+                'usage' => $result['usage'] ?? null,
+            ];
         } catch (GuzzleException $e) {
-            throw new \RuntimeException('Claude API error: ' . $e->getMessage());
+            throw new \RuntimeException('Claude API request failed: ' . $e->getMessage(), $e->getCode(), $e);
         }
     }
 
-    public function stream(array $messages, array $options = []): \Generator
+    /**
+     * Stream a chat completion from Claude.
+     */
+    public function stream(array $messages): \Generator
     {
         try {
+            $formattedMessages = $this->formatMessages($messages);
+
             $response = $this->client->post('messages', [
                 'json' => [
-                    'messages' => $this->formatMessages($messages),
-                    'model' => $options['model'] ?? $this->config['model'] ?? 'claude-3-opus-20240229',
+                    'model' => $this->config['model'] ?? env('CLAUDE_MODEL', 'claude-3-opus-20240229'),
+                    'messages' => $formattedMessages,
+                    'temperature' => (float) ($this->config['temperature'] ?? env('CLAUDE_TEMPERATURE', 0.7)),
+                    'max_tokens' => (int) ($this->config['max_tokens'] ?? env('CLAUDE_MAX_TOKENS', 1000)),
                     'stream' => true,
-                    ...$this->formatOptions($options),
                 ],
                 'stream' => true,
+                'read_timeout' => 0,
+                'http_errors' => true,
+                'headers' => [
+                    'Accept' => 'text/event-stream',
+                    'Cache-Control' => 'no-cache',
+                    'Connection' => 'keep-alive',
+                ],
+                'decode_content' => true,
+                'verify' => false
             ]);
 
-            $stream = $response->getBody();
-            while (!$stream->eof()) {
-                $line = trim($stream->read(1024));
-                if (str_starts_with($line, 'data: ')) {
-                    $data = substr($line, 6);
-                    if ($data === '[DONE]') {
-                        return;
-                    }
-                    $decoded = json_decode($data, true);
-                    if ($decoded && isset($decoded['delta']['text'])) {
-                        yield ['content' => $decoded['delta']['text']];
+            $stream = $response->getBody()->detach();
+            stream_set_blocking($stream, false);
+
+            while (!feof($stream)) {
+                $line = fgets($stream);
+                if (!empty($line)) {
+                    $data = json_decode($line, true);
+                    if ($data && isset($data['type']) && $data['type'] === 'content_block_delta') {
+                        yield [
+                            'content' => $data['delta']['text'],
+                            'model' => $data['model'] ?? null,
+                        ];
+                        if (function_exists('fastcgi_finish_request')) {
+                            fastcgi_finish_request();
+                        } else {
+                            flush();
+                            ob_flush();
+                        }
                     }
                 }
             }
+            fclose($stream);
         } catch (GuzzleException $e) {
-            throw new \RuntimeException('Claude API error: ' . $e->getMessage());
+            throw new \RuntimeException('Claude streaming request failed: ' . $e->getMessage(), $e->getCode(), $e);
         }
     }
 
-    public function getMemoryDriver(mixed $parentModel): ClaudeMemoryDriver
+    /**
+     * Get the driver's configuration.
+     */
+    public function getConfig(): array
     {
-        return new ClaudeMemoryDriver($parentModel);
+        return $this->config;
     }
 
+    /**
+     * Format messages for Claude API.
+     */
     protected function formatMessages(array $messages): array
     {
         return array_map(function ($message) {
+            // Claude uses 'user' and 'assistant' roles
+            $role = match ($message['role']) {
+                'system' => 'user',
+                default => $message['role'],
+            };
+
             return [
-                'role' => $message['role'],
+                'role' => $role,
                 'content' => $message['content'],
             ];
         }, $messages);
-    }
-
-    protected function formatOptions(array $options): array
-    {
-        $validOptions = [
-            'temperature',
-            'top_p',
-            'top_k',
-            'max_tokens',
-            'stop',
-            'system',
-            'metadata',
-        ];
-
-        $formattedOptions = array_intersect_key($options, array_flip($validOptions));
-
-        // Rename options to match Claude's API
-        if (isset($options['presence_penalty'])) {
-            $formattedOptions['presence_penalty'] = $options['presence_penalty'];
-        }
-        if (isset($options['frequency_penalty'])) {
-            $formattedOptions['frequency_penalty'] = $options['frequency_penalty'];
-        }
-
-        return $formattedOptions;
     }
 }
