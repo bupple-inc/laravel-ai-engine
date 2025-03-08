@@ -25,40 +25,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: npm
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            **/node_modules
-            ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
       - name: Install dependencies
-        working-directory: docs
-        run: npm install
-
-      - name: Check directory structure
-        working-directory: docs
-        run: |
-          echo "Current directory structure:"
-          ls -R v/
-
-      - name: Build with debug
-        working-directory: docs
-        run: |
-          export DEBUG=vitepress:* 
-          npm run docs:build || {
-            echo "Build failed. Checking for missing files..."
-            for file in $(find . -name "*.md"); do
-              echo "Checking links in $file"
-              grep -o '\[.*\]([^)]*)' "$file" || true
-            done
-            exit 1
-          }
-
+        run: npm ci
+      - name: Build with VitePress
+        run: npm run docs:build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -70,8 +44,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     runs-on: ubuntu-latest
-    
+    name: Deploy
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4
