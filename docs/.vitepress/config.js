@@ -25,7 +25,8 @@ export default {
         text: 'Links',
         items: [
           { text: 'GitHub', link: 'https://github.com/bupple-inc/laravel-ai-engine' },
-          { text: 'Packagist', link: 'https://packagist.org/packages/bupple/laravel-ai-engine' }
+          { text: 'Packagist', link: 'https://packagist.org/packages/bupple/laravel-ai-engine' },
+          { text: 'Bupple', link: 'https://bupple.io' }
         ]
       }
     ],
