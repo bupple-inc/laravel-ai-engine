@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive test coverage
 - API documentation improvements
 
-## [0.1.01] - 2024-03-14
+## [0.1.0] - 2024-03-14
 
 ### Added
 - Initial release with support for multiple AI providers:
@@ -65,5 +65,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Best practices guide
 - Troubleshooting section
 
-[Unreleased]: https://github.com/bupple-inc/laravel-ai-engine/compare/v0.1.01...HEAD
-[0.1.01]: https://github.com/bupple-inc/laravel-ai-engine/releases/tag/v0.1.01 
+[Unreleased]: https://github.com/bupple-inc/laravel-ai-engine/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/bupple-inc/laravel-ai-engine/releases/tag/v0.1.0 
