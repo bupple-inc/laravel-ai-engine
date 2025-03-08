@@ -1,6 +1,6 @@
 export default {
   title: "Bupple Laravel AI Engine",
-  description: "A unified interface for multiple AI providers with built-in memory management and streaming capabilities",
+  description: "A unified interface for multiple AI providers with built-in memory management and streaming capabilitiess",
   base: '/',
   outDir: 'dist',
   head: [
