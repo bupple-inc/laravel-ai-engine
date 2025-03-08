@@ -1,12 +1,13 @@
 <?php
 
-namespace Bupple\Engine\Providers;
+namespace BuppleEngine\Providers;
 
-use Bupple\Engine\BuppleEngine;
-use Bupple\Engine\Core\Memory\MemoryManager;
-use Bupple\Engine\Core\Memory\Contracts\MemoryDriverInterface;
+use BuppleEngine\BuppleEngine;
+use BuppleEngine\Core\Memory\MemoryManager;
+use BuppleEngine\Core\Memory\Contracts\MemoryDriverInterface;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 
 class BuppleEngineServiceProvider extends ServiceProvider implements DeferrableProvider
 {
@@ -32,6 +33,11 @@ class BuppleEngineServiceProvider extends ServiceProvider implements DeferrableP
         $this->app->bind(MemoryDriverInterface::class, function ($app) {
             return $app->make(MemoryManager::class)->driver();
         });
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/../config/auth.php',
+            'auth'
+        );
     }
 
     /**

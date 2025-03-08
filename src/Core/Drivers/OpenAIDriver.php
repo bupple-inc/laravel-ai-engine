@@ -1,9 +1,9 @@
 <?php
 
-namespace Bupple\Engine\Core\Drivers;
+namespace BuppleEngine\Core\Drivers;
 
-use Bupple\Engine\Core\Drivers\Contracts\ChatDriverInterface;
-use Bupple\Engine\Core\Memory\OpenAIMemoryDriver;
+use BuppleEngine\Core\Drivers\Contracts\ChatDriverInterface;
+use BuppleEngine\Core\Memory\OpenAIMemoryDriver;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 

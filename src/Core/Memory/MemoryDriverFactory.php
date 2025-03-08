@@ -1,6 +1,6 @@
 <?php
 
-namespace Bupple\Engine\Core\Memory;
+namespace BuppleEngine\Core\Memory;
 
 use InvalidArgumentException;
 

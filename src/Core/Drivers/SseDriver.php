@@ -1,6 +1,6 @@
 <?php
 
-namespace Bupple\Engine\Core\Drivers;
+namespace BuppleEngine\Core\Drivers;
 
 class SseDriver
 {

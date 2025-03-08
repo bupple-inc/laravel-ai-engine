@@ -1,6 +1,6 @@
 <?php
 
-namespace Bupple\Engine\Core\Memory\Contracts;
+namespace BuppleEngine\Core\Memory\Contracts;
 
 interface MemoryDriverInterface
 {

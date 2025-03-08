@@ -1,15 +1,15 @@
 <?php
 
-namespace Bupple\Engine;
+namespace BuppleEngine;
 
-use Bupple\Engine\Core\Drivers\ClaudeDriver;
-use Bupple\Engine\Core\Drivers\Contracts\ChatDriverInterface;
-use Bupple\Engine\Core\Drivers\GeminiDriver;
-use Bupple\Engine\Core\Drivers\OpenAIDriver;
-use Bupple\Engine\Core\Memory\Contracts\MemoryDriverInterface;
-use Bupple\Engine\Core\Drivers\SseDriver;
-use Bupple\Engine\Core\Helpers\JsonParserHelper;
-use Bupple\Engine\Core\Memory\MemoryManager;
+use BuppleEngine\Core\Drivers\ClaudeDriver;
+use BuppleEngine\Core\Drivers\Contracts\ChatDriverInterface;
+use BuppleEngine\Core\Drivers\GeminiDriver;
+use BuppleEngine\Core\Drivers\OpenAIDriver;
+use BuppleEngine\Core\Memory\Contracts\MemoryDriverInterface;
+use BuppleEngine\Core\Drivers\SseDriver;
+use BuppleEngine\Core\Helpers\JsonParserHelper;
+use BuppleEngine\Core\Memory\MemoryManager;
 
 class BuppleEngine
 {

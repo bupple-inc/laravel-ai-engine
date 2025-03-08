@@ -1,8 +1,8 @@
 <?php
 
-namespace Bupple\Engine\Core\Drivers;
+namespace BuppleEngine\Core\Drivers;
 
-use Bupple\Engine\Core\Drivers\Contracts\ChatDriverInterface;
+use BuppleEngine\Core\Drivers\Contracts\ChatDriverInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 

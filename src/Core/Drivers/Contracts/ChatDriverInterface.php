@@ -1,6 +1,6 @@
 <?php
 
-namespace Bupple\Engine\Core\Drivers\Contracts;
+namespace BuppleEngine\Core\Drivers\Contracts;
 
 interface ChatDriverInterface
 {

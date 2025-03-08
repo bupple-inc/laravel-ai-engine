@@ -1,6 +1,6 @@
 {
   "name": "bupple/laravel-ai-engine",
-  "description": "Bupple AI Engine for Laravel (Laravel 11, 12)",
+  "description": "Bupple Engine for Laravel",
   "type": "library",
   "license": "MIT",
   "homepage": "https://github.com/bupple-inc/laravel-ai-engine",
@@ -10,12 +10,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Bupple\\Engine\\": "src/"
+      "BuppleEngine\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Bupple\\Engine\\Tests\\": "tests/"
+      "BuppleEngine\\Tests\\": "tests/"
     }
   },
   "authors": [
@@ -29,14 +29,15 @@
     }
   ],
   "require": {
-    "php": "^8.2|^8.3",
+    "php": "^8.1",
     "ext-json": "*",
     "illuminate/database": "^11.0|^12.0",
     "illuminate/support": "^11.0|^12.0",
-    "guzzlehttp/guzzle": "^7.8"
+    "guzzlehttp/guzzle": "^7.8",
+    "livewire/livewire": "^3.0",
+    "laravel/framework": "^10.0"
   },
   "require-dev": {
-    "laravel/framework": "^11.0|^12.0",
     "pestphp/pest": "^2.0",
     "pestphp/pest-plugin-laravel": "^2.0",
     "orchestra/testbench": "^9.0"
@@ -47,10 +48,10 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Bupple\\Engine\\Providers\\BuppleEngineServiceProvider"
+        "BuppleEngine\\Providers\\BuppleEngineServiceProvider"
       ],
       "aliases": {
-        "BuppleEngine": "Bupple\\Engine\\Facades\\BuppleEngine"
+        "BuppleEngine": "BuppleEngine\\Facades\\BuppleEngine"
       }
     }
   },

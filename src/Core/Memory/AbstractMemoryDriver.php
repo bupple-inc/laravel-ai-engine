@@ -1,9 +1,9 @@
 <?php
 
-namespace Bupple\Engine\Core\Memory;
+namespace BuppleEngine\Core\Memory;
 
-use Bupple\Engine\Core\Memory\Contracts\MemoryDriverInterface;
-use Bupple\Engine\Core\Models\Memory;
+use BuppleEngine\Core\Memory\Contracts\MemoryDriverInterface;
+use BuppleEngine\Core\Models\Memory;
 
 abstract class AbstractMemoryDriver implements MemoryDriverInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bupple\Engine\Core\Models;
+namespace BuppleEngine\Core\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
