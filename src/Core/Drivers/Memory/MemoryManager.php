@@ -1,8 +1,9 @@
 <?php
 
-namespace BuppleEngine\Core\Memory;
+namespace BuppleEngine\Core\Drivers\Memory;
 
-use BuppleEngine\Core\Memory\Contracts\MemoryDriverInterface;
+use BuppleEngine\Core\Models\Memory;
+use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
 use InvalidArgumentException;
 use RuntimeException;
 

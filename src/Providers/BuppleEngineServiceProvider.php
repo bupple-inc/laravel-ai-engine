@@ -3,11 +3,10 @@
 namespace BuppleEngine\Providers;
 
 use BuppleEngine\BuppleEngine;
-use BuppleEngine\Core\Memory\MemoryManager;
-use BuppleEngine\Core\Memory\Contracts\MemoryDriverInterface;
+use BuppleEngine\Core\Drivers\Memory\MemoryManager;
+use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
-use Livewire\Livewire;
 
 class BuppleEngineServiceProvider extends ServiceProvider implements DeferrableProvider
 {

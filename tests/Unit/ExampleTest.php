@@ -1,6 +1,6 @@
 <?php
 
-use Bupple\Engine\Facades\BuppleEngine;
+use BuppleEngine\Facades\BuppleEngine;
 
 test('bupple engine facade is registered', function () {
     expect(class_exists(BuppleEngine::class))->toBeTrue();

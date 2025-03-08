@@ -1,13 +1,13 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers;
+namespace BuppleEngine\Core\Drivers\Engine;
 
 use BuppleEngine\Core\Drivers\Contracts\ChatDriverInterface;
 use BuppleEngine\Core\Memory\OpenAIMemoryDriver;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-class OpenAIDriver implements ChatDriverInterface
+class OpenAIDriver extends AbstractEngineDriver
 {
     /**
      * The configuration array.

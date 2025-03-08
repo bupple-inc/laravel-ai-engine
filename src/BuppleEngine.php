@@ -2,14 +2,14 @@
 
 namespace BuppleEngine;
 
-use BuppleEngine\Core\Drivers\ClaudeDriver;
-use BuppleEngine\Core\Drivers\Contracts\ChatDriverInterface;
-use BuppleEngine\Core\Drivers\GeminiDriver;
-use BuppleEngine\Core\Drivers\OpenAIDriver;
-use BuppleEngine\Core\Memory\Contracts\MemoryDriverInterface;
-use BuppleEngine\Core\Drivers\SseDriver;
+use BuppleEngine\Core\Drivers\Engine\ClaudeDriver;
+use BuppleEngine\Core\Drivers\Engine\Contracts\EngineDriverInterface;
+use BuppleEngine\Core\Drivers\Engine\GeminiDriver;
+use BuppleEngine\Core\Drivers\Engine\OpenAIDriver;
+use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
+use BuppleEngine\Core\Drivers\Memory\MemoryManager;
+use BuppleEngine\Core\Drivers\Stream\SseStreamDriver;
 use BuppleEngine\Core\Helpers\JsonParserHelper;
-use BuppleEngine\Core\Memory\MemoryManager;
 
 class BuppleEngine
 {
@@ -26,7 +26,7 @@ class BuppleEngine
     /**
      * The SSE driver instance.
      */
-    protected ?SseDriver $sseDriver = null;
+    protected ?SseStreamDriver $sseDriver = null;
 
     /**
      * The JSON parser helper instance.
@@ -36,7 +36,7 @@ class BuppleEngine
     /**
      * The active chat driver instances.
      *
-     * @var array<string, ChatDriverInterface>
+     * @var array<string, EngineDriverInterface>
      */
     protected array $chatDrivers = [];
 
@@ -61,9 +61,9 @@ class BuppleEngine
      * Get a chat driver instance.
      *
      * @param string|null $name
-     * @return ChatDriverInterface
+     * @return EngineDriverInterface
      */
-    public function ai(?string $name = null): ChatDriverInterface
+    public function ai(?string $name = null): EngineDriverInterface
     {
         $name = $name ?? $this->getDefaultChatDriver();
 
@@ -77,7 +77,7 @@ class BuppleEngine
     /**
      * Alias for ai() method for backward compatibility.
      */
-    public function chat(?string $name = null): ChatDriverInterface
+    public function chat(?string $name = null): EngineDriverInterface
     {
         return $this->ai($name);
     }
@@ -85,10 +85,10 @@ class BuppleEngine
     /**
      * Get the SSE driver instance.
      */
-    public function sse(): SseDriver
+    public function sse(): SseStreamDriver
     {
         if (!$this->sseDriver) {
-            $this->sseDriver = new SseDriver();
+            $this->sseDriver = new SseStreamDriver();
         }
 
         return $this->sseDriver;
@@ -136,7 +136,7 @@ class BuppleEngine
     /**
      * Create a new chat driver instance.
      */
-    protected function createChatDriver(string $driver): ChatDriverInterface
+    protected function createChatDriver(string $driver): EngineDriverInterface
     {
         $config = $this->config[$driver] ?? [];
 
@@ -144,7 +144,7 @@ class BuppleEngine
             'openai' => new OpenAIDriver($config),
             'gemini' => new GeminiDriver($config),
             'claude' => new ClaudeDriver($config),
-            default => throw new \InvalidArgumentException("Chat driver [{$driver}] not supported."),
+            default => throw new \InvalidArgumentException("Driver [{$driver}] not supported."),
         };
     }
 

@@ -1,12 +1,13 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers;
+namespace BuppleEngine\Core\Drivers\Engine;
 
 use BuppleEngine\Core\Drivers\Contracts\ChatDriverInterface;
+use BuppleEngine\Core\Memory\GeminiMemoryDriver;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-class GeminiDriver implements ChatDriverInterface
+class GeminiDriver extends AbstractEngineDriver
 {
     /**
      * The configuration array.
@@ -162,5 +163,30 @@ class GeminiDriver implements ChatDriverInterface
             'user' => 'user',
             default => 'user',
         };
+    }
+
+    protected function getBaseUri(): string
+    {
+        $projectId = $this->config['project_id'] ?? env('GEMINI_PROJECT_ID');
+        return $projectId
+            ? "https://generativelanguage.googleapis.com/v1/projects/{$projectId}/"
+            : 'https://generativelanguage.googleapis.com/v1/';
+    }
+
+    protected function getHeaders(): array
+    {
+        return [
+            'x-goog-api-key' => $this->config['api_key'] ?? env('GEMINI_API_KEY'),
+            'Content-Type' => 'application/json',
+        ];
+    }
+
+    protected function formatOptions(array $options): array
+    {
+        return [
+            'model' => $options['model'] ?? env('GEMINI_MODEL', 'gemini-pro'),
+            'temperature' => (float) ($options['temperature'] ?? env('GEMINI_TEMPERATURE', 0.7)),
+            'maxOutputTokens' => (int) ($options['max_tokens'] ?? env('GEMINI_MAX_TOKENS', 1000)),
+        ];
     }
 }

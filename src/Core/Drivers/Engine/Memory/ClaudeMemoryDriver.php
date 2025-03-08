@@ -1,10 +1,11 @@
 <?php
 
-namespace BuppleEngine\Core\Memory;
+namespace BuppleEngine\Core\Drivers\Engine\Memory;
 
 use BuppleEngine\Core\Models\Memory;
+use BuppleEngine\Core\Drivers\Memory\AbstractMemoryDriver;
 
-class OpenAIMemoryDriver extends AbstractMemoryDriver
+class ClaudeMemoryDriver extends AbstractMemoryDriver
 {
     /**
      * The driver configuration.
@@ -14,7 +15,7 @@ class OpenAIMemoryDriver extends AbstractMemoryDriver
     protected array $config;
 
     /**
-     * Create a new OpenAI memory driver instance.
+     * Create a new Claude memory driver instance.
      *
      * @param array $config
      */
@@ -24,7 +25,7 @@ class OpenAIMemoryDriver extends AbstractMemoryDriver
     }
 
     /**
-     * Store a memory using OpenAI embeddings.
+     * Store a memory using Claude embeddings.
      *
      * @param string $key
      * @param mixed $value
@@ -32,20 +33,20 @@ class OpenAIMemoryDriver extends AbstractMemoryDriver
      */
     public function store(string $key, mixed $value): bool
     {
-        // Implementation will use OpenAI embeddings to store memory
+        // Implementation will use Claude embeddings to store memory
         // This is a placeholder for the actual implementation
         return true;
     }
 
     /**
-     * Retrieve a memory using OpenAI embeddings.
+     * Retrieve a memory using Claude embeddings.
      *
      * @param string $key
      * @return mixed
      */
     public function retrieve(string $key): mixed
     {
-        // Implementation will use OpenAI embeddings to retrieve memory
+        // Implementation will use Claude embeddings to retrieve memory
         // This is a placeholder for the actual implementation
         return null;
     }
@@ -77,19 +78,19 @@ class OpenAIMemoryDriver extends AbstractMemoryDriver
     }
 
     /**
-     * Format the role for OpenAI.
+     * Format the role for Claude.
      *
      * @param string $role
      * @return string
      */
     protected function formatRole(string $role): string
     {
-        // OpenAI uses standard roles: system, user, assistant
+        // Claude uses standard roles: system, user, assistant
         return $role;
     }
 
     /**
-     * Format a message for OpenAI.
+     * Format a message for Claude.
      *
      * @param Memory $message
      * @return array
@@ -114,41 +115,37 @@ class OpenAIMemoryDriver extends AbstractMemoryDriver
     }
 
     /**
-     * Handle media content formatting for OpenAI.
+     * Handle media content formatting for Claude.
      *
      * @param array $message
-     * @return array|string
+     * @return string
      */
-    private function handleMediaContent(array $message): array|string
+    private function handleMediaContent(array $message): string
     {
         if (isset($message['metadata']['description'])) {
             return $message['metadata']['description'];
         }
 
-        $content = [];
+        $content = '';
 
         switch ($message['type']) {
             case 'image':
-                $content[] = [
-                    'type' => 'image_url',
-                    'image_url' => [
-                        'url' => $message['content'],
-                        'detail' => $message['metadata']['detail'] ?? 'auto',
-                    ],
-                ];
+                $content .= "<image>{$message['content']}</image>\n";
+                if (isset($message['metadata']['caption'])) {
+                    $content .= $message['metadata']['caption'] . "\n";
+                }
                 break;
             case 'audio':
-                $content[] = [
-                    'type' => 'audio',
-                    'audio' => [
-                        'url' => $message['content'],
-                        'format' => $message['metadata']['format'] ?? null,
-                    ],
-                ];
+                if (isset($message['metadata']['format'])) {
+                    $content .= "<audio format=\"{$message['metadata']['format']}\">{$message['content']}</audio>\n";
+                }
+                if (isset($message['metadata']['transcript'])) {
+                    $content .= $message['metadata']['transcript'] . "\n";
+                }
                 break;
         }
 
-        return $content;
+        return trim($content);
     }
 
     /**
@@ -158,7 +155,7 @@ class OpenAIMemoryDriver extends AbstractMemoryDriver
      */
     protected function getDriverName(): string
     {
-        return 'openai';
+        return 'claude';
     }
 
     /**

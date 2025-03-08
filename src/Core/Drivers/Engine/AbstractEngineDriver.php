@@ -1,11 +1,11 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers;
+namespace BuppleEngine\Core\Drivers\Engine;
 
-use BuppleEngine\Core\Drivers\Contracts\ChatDriverInterface;
+use BuppleEngine\Core\Drivers\Engine\Contracts\EngineDriverInterface;
 use GuzzleHttp\Client;
 
-abstract class AbstractChatDriver implements ChatDriverInterface
+abstract class AbstractEngineDriver implements EngineDriverInterface
 {
     protected Client $client;
     protected array $config;

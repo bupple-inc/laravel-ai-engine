@@ -1,8 +1,8 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers;
+namespace BuppleEngine\Core\Drivers\Stream;
 
-class SseDriver
+class SseStreamDriver
 {
     /**
      * SSE retry timeout in milliseconds.

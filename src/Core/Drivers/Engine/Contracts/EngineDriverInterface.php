@@ -1,8 +1,8 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Contracts;
+namespace BuppleEngine\Core\Drivers\Engine\Contracts;
 
-interface ChatDriverInterface
+interface EngineDriverInterface
 {
     /**
      * Send a message to the AI and get a response.

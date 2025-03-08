@@ -1,12 +1,13 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers;
+namespace BuppleEngine\Core\Drivers\Engine;
 
 use BuppleEngine\Core\Drivers\Contracts\ChatDriverInterface;
+use BuppleEngine\Core\Memory\ClaudeMemoryDriver;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
-class ClaudeDriver implements ChatDriverInterface
+class ClaudeDriver extends AbstractEngineDriver
 {
     /**
      * The configuration array.
@@ -145,5 +146,28 @@ class ClaudeDriver implements ChatDriverInterface
                 'content' => $message['content'],
             ];
         }, $messages);
+    }
+
+    protected function getBaseUri(): string
+    {
+        return 'https://api.anthropic.com/v1/';
+    }
+
+    protected function getHeaders(): array
+    {
+        return [
+            'x-api-key' => $this->config['api_key'] ?? env('CLAUDE_API_KEY'),
+            'anthropic-version' => '2023-06-01',
+            'Content-Type' => 'application/json',
+        ];
+    }
+
+    protected function formatOptions(array $options): array
+    {
+        return [
+            'model' => $options['model'] ?? env('CLAUDE_MODEL', 'claude-3-opus-20240229'),
+            'temperature' => (float) ($options['temperature'] ?? env('CLAUDE_TEMPERATURE', 0.7)),
+            'max_tokens' => (int) ($options['max_tokens'] ?? env('CLAUDE_MAX_TOKENS', 1000)),
+        ];
     }
 }
