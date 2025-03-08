@@ -6,7 +6,7 @@
 
 #### Core Features
 - Multiple AI provider support:
-  - OpenAI (GPT-4, GPT-3.5)
+  - OpenAI
   - Google Gemini
   - Anthropic Claude
 - Built-in memory management system

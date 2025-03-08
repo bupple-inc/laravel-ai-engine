@@ -18,7 +18,7 @@ Welcome to the Bupple Laravel AI Engine documentation. This package provides a s
 ## Features
 
 ### Multiple AI Providers
-- OpenAI (GPT-4, GPT-3.5)
+- OpenAI
 - Google Gemini
 - Anthropic Claude
 - [Learn more](./v/0.1.0/guide/core/ai-providers.md)

@@ -5,7 +5,7 @@ The Bupple Laravel AI Engine supports multiple AI providers, each with its own u
 ## Supported Providers
 
 Currently, the package supports three major AI providers:
-1. OpenAI (GPT-4, GPT-3.5)
+1. OpenAI
 2. Google Gemini
 3. Anthropic Claude
 
@@ -29,7 +29,7 @@ $response = BuppleEngine::ai('openai')->send([
 
 ## OpenAI Integration
 
-OpenAI is the default provider and supports GPT-4 and GPT-3.5 models.
+OpenAI is the default provider.
 
 ### Configuration
 

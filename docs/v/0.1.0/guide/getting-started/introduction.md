@@ -9,7 +9,7 @@ Bupple Laravel AI Engine is a comprehensive solution for Laravel developers who 
 ## Key Features
 
 ### 🤖 Multiple AI Provider Support
-- **OpenAI Integration**: Full support for GPT-4 and GPT-3.5 models
+- **OpenAI Integration**: Full support for all of GPT-* models
 - **Google Gemini**: Integration with Google's latest AI models
 - **Anthropic Claude**: Support for Claude's advanced language models
 
