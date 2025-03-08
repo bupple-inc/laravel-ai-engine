@@ -85,7 +85,7 @@ export default {
     ],
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2025 Bupple'
+      copyright: 'Copyright © 2025 Bupple Inc.'
     }
   }
 } 
