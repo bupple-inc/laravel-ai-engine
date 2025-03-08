@@ -30,7 +30,7 @@ Whether you're building a chatbot, content generation system, or AI-powered appl
 
 ## 🚧 Development Status
 
-> **Important Notice**: This package is currently under heavy maintenance and active development. A significantly enhanced version 1.0.0 is scheduled for release on May 15st, 2024.
+> **Important Notice**: This package is currently under heavy maintenance and active development. A significantly enhanced version 1.0.0 is scheduled for release on May 15st, 2025.
 
 ### 📅 Roadmap to v1.0.0
 
