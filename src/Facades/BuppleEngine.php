@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static MemoryManager memory()
  * @method static MemoryDriverInterface driver(string|null $driver = null)
  * @method static ChatDriverInterface chat(string|null $driver = null)
- * @method static \BuppleEngine\Core\Drivers\SseDriver sse()
+ * @method static \BuppleEngine\Core\Drivers\Stream\SseStreamDriver sse()
  * @method static \BuppleEngine\Core\Helpers\JsonParserHelper jsonParserHelper()
  * @method static array|null jsonParser(string $json)
  * @method static mixed config(string|null $key = null, mixed $default = null)

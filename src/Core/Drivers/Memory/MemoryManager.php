@@ -2,7 +2,6 @@
 
 namespace BuppleEngine\Core\Drivers\Memory;
 
-use BuppleEngine\Core\Models\Memory;
 use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
 use InvalidArgumentException;
 use RuntimeException;

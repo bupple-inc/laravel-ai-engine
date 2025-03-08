@@ -2,8 +2,7 @@
 
 namespace BuppleEngine\Core\Drivers\Engine;
 
-use BuppleEngine\Core\Drivers\Contracts\ChatDriverInterface;
-use BuppleEngine\Core\Memory\OpenAIMemoryDriver;
+use BuppleEngine\Core\Drivers\Engine\Memory\OpenAIMemoryDriver as MemoryOpenAIMemoryDriver;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -24,25 +23,7 @@ class OpenAIDriver extends AbstractEngineDriver
      */
     public function __construct(array $config)
     {
-        $this->config = $config;
-        $this->client = new Client([
-            'base_uri' => 'https://api.openai.com/v1/',
-            'headers' => [
-                'Authorization' => 'Bearer ' . ($config['api_key'] ?? env('OPENAI_API_KEY')),
-                'Content-Type' => 'application/json',
-            ],
-        ]);
-
-        if (isset($config['organization_id']) || env('OPENAI_ORGANIZATION_ID')) {
-            $this->client = new Client([
-                'base_uri' => 'https://api.openai.com/v1/',
-                'headers' => [
-                    'Authorization' => 'Bearer ' . ($config['api_key'] ?? env('OPENAI_API_KEY')),
-                    'OpenAI-Organization' => $config['organization_id'] ?? env('OPENAI_ORGANIZATION_ID'),
-                    'Content-Type' => 'application/json',
-                ],
-            ]);
-        }
+        parent::__construct($config);
     }
 
     /**
@@ -139,9 +120,9 @@ class OpenAIDriver extends AbstractEngineDriver
         return $this->config;
     }
 
-    public function getMemoryDriver(mixed $parentModel): OpenAIMemoryDriver
+    public function getMemoryDriver(mixed $parentModel): MemoryOpenAIMemoryDriver
     {
-        return new OpenAIMemoryDriver($parentModel);
+        return new MemoryOpenAIMemoryDriver($parentModel);
     }
 
     protected function formatMessages(array $messages): array
@@ -169,5 +150,24 @@ class OpenAIDriver extends AbstractEngineDriver
         ];
 
         return array_intersect_key($options, array_flip($validOptions));
+    }
+
+    protected function getBaseUri(): string
+    {
+        return 'https://api.openai.com/v1/';
+    }
+
+    protected function getHeaders(): array
+    {
+        $headers = [
+            'Authorization' => 'Bearer ' . ($this->config['api_key'] ?? env('OPENAI_API_KEY')),
+            'Content-Type' => 'application/json',
+        ];
+
+        if (isset($this->config['organization_id']) || env('OPENAI_ORGANIZATION_ID')) {
+            $headers['OpenAI-Organization'] = $this->config['organization_id'] ?? env('OPENAI_ORGANIZATION_ID');
+        }
+
+        return $headers;
     }
 }

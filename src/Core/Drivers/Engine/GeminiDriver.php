@@ -2,8 +2,6 @@
 
 namespace BuppleEngine\Core\Drivers\Engine;
 
-use BuppleEngine\Core\Drivers\Contracts\ChatDriverInterface;
-use BuppleEngine\Core\Memory\GeminiMemoryDriver;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
