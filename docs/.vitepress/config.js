@@ -7,6 +7,7 @@ export default {
     ['link', { rel: 'icon', href: 'https://framerusercontent.com/images/CnM2ZH7e8kIXeOBCOJ7CnBzI4A.png' }],
     ['link', { rel: 'canonical', href: 'https://laravel-ai-engine.bupple.io' }]
   ],
+  ignoreDeadLinks: process.env.NODE_ENV === 'development',
   themeConfig: {
     logo: 'https://framerusercontent.com/images/CnM2ZH7e8kIXeOBCOJ7CnBzI4A.png',
     nav: [
