@@ -1,8 +1,9 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Engine;
+namespace BuppleEngine\Core\Drivers\Engine\OpenAI;
 
-use BuppleEngine\Core\Drivers\Engine\Memory\OpenAIMemoryDriver as MemoryOpenAIMemoryDriver;
+use BuppleEngine\Core\Drivers\Engine\AbstractEngineDriver;
+use BuppleEngine\Core\Drivers\Engine\OpenAI\OpenAIMemoryDriver;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -120,11 +121,17 @@ class OpenAIDriver extends AbstractEngineDriver
         return $this->config;
     }
 
-    public function getMemoryDriver(mixed $parentModel): MemoryOpenAIMemoryDriver
+    /**
+     * Get the memory driver instance for this engine.
+     */
+    public function getMemoryDriver(mixed $parentModel): OpenAIMemoryDriver
     {
-        return new MemoryOpenAIMemoryDriver($parentModel);
+        return new OpenAIMemoryDriver($parentModel);
     }
 
+    /**
+     * Format messages for the API request.
+     */
     protected function formatMessages(array $messages): array
     {
         return array_map(function ($message) {
@@ -135,6 +142,9 @@ class OpenAIDriver extends AbstractEngineDriver
         }, $messages);
     }
 
+    /**
+     * Format options for the API request.
+     */
     protected function formatOptions(array $options): array
     {
         $validOptions = [
@@ -152,11 +162,17 @@ class OpenAIDriver extends AbstractEngineDriver
         return array_intersect_key($options, array_flip($validOptions));
     }
 
+    /**
+     * Get the base URI for the API.
+     */
     protected function getBaseUri(): string
     {
         return 'https://api.openai.com/v1/';
     }
 
+    /**
+     * Get the headers for the API request.
+     */
     protected function getHeaders(): array
     {
         $headers = [

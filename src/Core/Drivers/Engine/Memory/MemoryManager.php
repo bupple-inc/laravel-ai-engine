@@ -1,11 +1,11 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Memory;
+namespace BuppleEngine\Core\Drivers\Engine\Memory;
 
-use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
-use BuppleEngine\Core\Drivers\Engine\Memory\OpenAIMemoryDriver;
-use BuppleEngine\Core\Drivers\Engine\Memory\GeminiMemoryDriver;
-use BuppleEngine\Core\Drivers\Engine\Memory\ClaudeMemoryDriver;
+use BuppleEngine\Core\Drivers\Engine\Memory\Contracts\MemoryDriverInterface;
+use BuppleEngine\Core\Drivers\Engine\OpenAI\OpenAIMemoryDriver;
+use BuppleEngine\Core\Drivers\Engine\Gemini\GeminiMemoryDriver;
+use BuppleEngine\Core\Drivers\Engine\Claude\ClaudeMemoryDriver;
 use InvalidArgumentException;
 use RuntimeException;
 

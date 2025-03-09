@@ -1,7 +1,9 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Engine;
+namespace BuppleEngine\Core\Drivers\Engine\Gemini;
 
+use BuppleEngine\Core\Drivers\Engine\AbstractEngineDriver;
+use BuppleEngine\Core\Drivers\Engine\Gemini\GeminiMemoryDriver;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -45,7 +47,6 @@ class GeminiDriver extends AbstractEngineDriver
     public function send(array $messages): array
     {
         try {
-            // Convert messages array to Gemini format
             $formattedMessages = $this->formatMessages($messages);
 
             $response = $this->client->post('models/' . ($this->config['model'] ?? env('GEMINI_MODEL', 'gemini-pro')) . ':generateContent', [
@@ -135,6 +136,14 @@ class GeminiDriver extends AbstractEngineDriver
     }
 
     /**
+     * Get the memory driver instance for this engine.
+     */
+    public function getMemoryDriver(mixed $parentModel): GeminiMemoryDriver
+    {
+        return new GeminiMemoryDriver($parentModel);
+    }
+
+    /**
      * Format messages for Gemini API.
      */
     protected function formatMessages(array $messages): array
@@ -163,6 +172,9 @@ class GeminiDriver extends AbstractEngineDriver
         };
     }
 
+    /**
+     * Get the base URI for the API.
+     */
     protected function getBaseUri(): string
     {
         $projectId = $this->config['project_id'] ?? env('GEMINI_PROJECT_ID');
@@ -171,6 +183,9 @@ class GeminiDriver extends AbstractEngineDriver
             : 'https://generativelanguage.googleapis.com/v1/';
     }
 
+    /**
+     * Get the headers for the API request.
+     */
     protected function getHeaders(): array
     {
         return [
@@ -179,6 +194,9 @@ class GeminiDriver extends AbstractEngineDriver
         ];
     }
 
+    /**
+     * Format options for the API request.
+     */
     protected function formatOptions(array $options): array
     {
         return [

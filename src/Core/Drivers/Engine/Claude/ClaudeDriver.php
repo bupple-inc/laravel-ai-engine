@@ -1,7 +1,9 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Engine;
+namespace BuppleEngine\Core\Drivers\Engine\Claude;
 
+use BuppleEngine\Core\Drivers\Engine\AbstractEngineDriver;
+use BuppleEngine\Core\Drivers\Engine\Claude\ClaudeMemoryDriver;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -39,7 +41,6 @@ class ClaudeDriver extends AbstractEngineDriver
     public function send(array $messages): array
     {
         try {
-            // Convert messages array to Claude format
             $formattedMessages = $this->formatMessages($messages);
 
             $response = $this->client->post('messages', [
@@ -128,6 +129,14 @@ class ClaudeDriver extends AbstractEngineDriver
     }
 
     /**
+     * Get the memory driver instance for this engine.
+     */
+    public function getMemoryDriver(mixed $parentModel): ClaudeMemoryDriver
+    {
+        return new ClaudeMemoryDriver($parentModel);
+    }
+
+    /**
      * Format messages for Claude API.
      */
     protected function formatMessages(array $messages): array
@@ -146,11 +155,17 @@ class ClaudeDriver extends AbstractEngineDriver
         }, $messages);
     }
 
+    /**
+     * Get the base URI for the API.
+     */
     protected function getBaseUri(): string
     {
         return 'https://api.anthropic.com/v1/';
     }
 
+    /**
+     * Get the headers for the API request.
+     */
     protected function getHeaders(): array
     {
         return [
@@ -160,6 +175,9 @@ class ClaudeDriver extends AbstractEngineDriver
         ];
     }
 
+    /**
+     * Format options for the API request.
+     */
     protected function formatOptions(array $options): array
     {
         return [
