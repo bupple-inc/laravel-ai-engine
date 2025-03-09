@@ -1,8 +1,8 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Engine\Memory;
+namespace BuppleEngine\Core\Drivers\Memory;
 
-use BuppleEngine\Core\Drivers\Engine\Memory\Contracts\MemoryDriverInterface;
+use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
 use BuppleEngine\Core\Drivers\Engine\OpenAI\OpenAIMemoryDriver;
 use BuppleEngine\Core\Drivers\Engine\Gemini\GeminiMemoryDriver;
 use BuppleEngine\Core\Drivers\Engine\Claude\ClaudeMemoryDriver;

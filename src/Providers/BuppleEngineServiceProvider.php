@@ -3,8 +3,8 @@
 namespace BuppleEngine\Providers;
 
 use BuppleEngine\BuppleEngine;
-use BuppleEngine\Core\Drivers\Engine\Memory\MemoryManager;
-use BuppleEngine\Core\Drivers\Engine\Memory\Contracts\MemoryDriverInterface;
+use BuppleEngine\Core\Drivers\Memory\MemoryManager;
+use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 

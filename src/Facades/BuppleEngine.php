@@ -3,8 +3,8 @@
 namespace BuppleEngine\Facades;
 
 use BuppleEngine\Core\Drivers\Engine\Contracts\EngineDriverInterface;
-use BuppleEngine\Core\Drivers\Engine\Memory\Contracts\MemoryDriverInterface;
-use BuppleEngine\Core\Drivers\Engine\Memory\MemoryManager;
+use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
+use BuppleEngine\Core\Drivers\Memory\MemoryManager;
 use BuppleEngine\Core\Drivers\Stream\SseStreamDriver;
 use BuppleEngine\Core\Helpers\JsonParserHelper;
 use Illuminate\Support\Facades\Facade;

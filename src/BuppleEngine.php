@@ -6,8 +6,8 @@ use BuppleEngine\Core\Drivers\Engine\Claude\ClaudeDriver;
 use BuppleEngine\Core\Drivers\Engine\Contracts\EngineDriverInterface;
 use BuppleEngine\Core\Drivers\Engine\Gemini\GeminiDriver;
 use BuppleEngine\Core\Drivers\Engine\OpenAI\OpenAIDriver;
-use BuppleEngine\Core\Drivers\Engine\Memory\Contracts\MemoryDriverInterface;
-use BuppleEngine\Core\Drivers\Engine\Memory\MemoryManager;
+use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
+use BuppleEngine\Core\Drivers\Memory\MemoryManager;
 use BuppleEngine\Core\Drivers\Stream\SseStreamDriver;
 use BuppleEngine\Core\Helpers\JsonParserHelper;
 

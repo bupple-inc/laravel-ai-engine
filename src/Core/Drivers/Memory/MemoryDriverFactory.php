@@ -1,6 +1,6 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Engine\Memory;
+namespace BuppleEngine\Core\Drivers\Memory;
 
 use InvalidArgumentException;
 use BuppleEngine\Core\Drivers\Engine\OpenAI\OpenAIMemoryDriver;

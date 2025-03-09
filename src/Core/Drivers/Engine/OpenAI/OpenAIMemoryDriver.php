@@ -3,7 +3,7 @@
 namespace BuppleEngine\Core\Drivers\Engine\OpenAI;
 
 use BuppleEngine\Core\Models\Memory;
-use BuppleEngine\Core\Drivers\Engine\Memory\AbstractMemoryDriver;
+use BuppleEngine\Core\Drivers\Memory\AbstractMemoryDriver;
 
 class OpenAIMemoryDriver extends AbstractMemoryDriver
 {
