@@ -5,24 +5,32 @@ namespace BuppleEngine\Core\Drivers\Memory;
 use BuppleEngine\Core\Models\Memory;
 use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
 
+/**
+ * Abstract Memory Driver
+ * 
+ * This abstract class provides a base implementation for memory drivers in the Bupple Engine.
+ * It handles message management, content formatting, and basic memory operations.
+ * 
+ * @package BuppleEngine\Core\Drivers\Memory
+ */
 abstract class AbstractMemoryDriver implements MemoryDriverInterface
 {
     /**
-     * The driver configuration.
+     * The driver configuration array containing settings for the memory driver.
      *
      * @var array
      */
     protected array $config;
 
     /**
-     * The parent class for context.
+     * The fully qualified class name of the parent entity for context.
      *
      * @var string|null
      */
     protected ?string $parentClass = null;
 
     /**
-     * The parent ID for context.
+     * The unique identifier of the parent entity for context.
      *
      * @var string|int|null
      */
@@ -31,18 +39,47 @@ abstract class AbstractMemoryDriver implements MemoryDriverInterface
     /**
      * Create a new memory driver instance.
      *
-     * @param array $config
+     * @param array $config Configuration array for the driver
      */
     public function __construct(array $config)
     {
         $this->config = $config;
     }
 
+    // region Abstract Methods
+
     /**
-     * Set the parent context for the memory.
+     * Format the role for the specific driver implementation.
      *
-     * @param string $class
-     * @param string|int $id
+     * @param string $role The role to format
+     * @return string The formatted role
+     */
+    abstract protected function formatRole(string $role): string;
+
+    /**
+     * Format a message for the specific driver implementation.
+     *
+     * @param Memory $message The message to format
+     * @return array The formatted message
+     */
+    abstract protected function formatMessage(Memory $message): array;
+
+    /**
+     * Get the unique identifier for this driver implementation.
+     *
+     * @return string The driver name
+     */
+    abstract protected function getDriverName(): string;
+
+    // endregion
+
+    // region Context Management
+
+    /**
+     * Set the parent context for the memory operations.
+     *
+     * @param string $class The parent class name
+     * @param string|int $id The parent identifier
      * @return void
      */
     public function setParent(string $class, string|int $id): void
@@ -52,53 +89,28 @@ abstract class AbstractMemoryDriver implements MemoryDriverInterface
     }
 
     /**
-     * Get the configuration for this driver.
+     * Get the configuration for this driver instance.
      *
-     * @return array
+     * @return array The driver configuration
      */
     public function getConfig(): array
     {
         return $this->config;
     }
 
-    /**
-     * Format media content for storage or retrieval.
-     *
-     * @param array $message
-     * @return array
-     */
-    protected function formatMediaContent(array $message): array
-    {
-        if ($message['type'] === 'text') {
-            return $message;
-        }
+    // endregion
 
-        // Handle different content types (image, audio, etc.)
-        $content = [];
-        if (isset($message['content'])) {
-            foreach ((array) $message['content'] as $part) {
-                if (is_string($part)) {
-                    $content[] = ['type' => 'text', 'text' => $part];
-                } else {
-                    $content[] = $part;
-                }
-            }
-        }
-
-        $message['content'] = $content;
-        return $message;
-    }
+    // region Message Management
 
     /**
      * Add a message to the chat history.
      *
-     * @param string $role
-     * @param string $content
-     * @param string|null $type
-     * @param array $metadata
-     * @param string|null $messageId
-     * @return void
-     * @throws \RuntimeException
+     * @param string $role The role of the message sender
+     * @param string $content The message content
+     * @param string|null $type The message type (default: 'text')
+     * @param array $metadata Additional metadata for the message
+     * @param string|null $messageId Optional unique identifier for the message
+     * @throws \RuntimeException When parent context is not set
      */
     public function addMessage(string $role, string $content, ?string $type = 'text', array $metadata = [], ?string $messageId = null): void
     {
@@ -119,10 +131,49 @@ abstract class AbstractMemoryDriver implements MemoryDriverInterface
     }
 
     /**
-     * Get all messages from the chat history.
+     * Add a user message to the chat history.
      *
-     * @return array
-     * @throws \RuntimeException
+     * @param string $content The message content
+     * @param string|null $type The message type
+     * @param array $metadata Additional metadata
+     * @param string|null $messageId Optional message identifier
+     */
+    public function addUserMessage(string $content, ?string $type = 'text', array $metadata = [], ?string $messageId = null): void
+    {
+        $this->addMessage('user', $content, $type, $metadata, $messageId);
+    }
+
+    /**
+     * Add an assistant message to the chat history.
+     *
+     * @param string $content The message content
+     * @param string|null $type The message type
+     * @param array $metadata Additional metadata
+     * @param string|null $messageId Optional message identifier
+     */
+    public function addAssistantMessage(string $content, ?string $type = 'text', array $metadata = [], ?string $messageId = null): void
+    {
+        $this->addMessage('assistant', $content, $type, $metadata, $messageId);
+    }
+
+    /**
+     * Add a system message to the chat history.
+     *
+     * @param string $content The message content
+     * @param string|null $type The message type
+     * @param array $metadata Additional metadata
+     * @param string|null $messageId Optional message identifier
+     */
+    public function addSystemMessage(string $content, ?string $type = 'text', array $metadata = [], ?string $messageId = null): void
+    {
+        $this->addMessage('system', $content, $type, $metadata, $messageId);
+    }
+
+    /**
+     * Retrieve all messages from the chat history.
+     *
+     * @return array Array of formatted messages
+     * @throws \RuntimeException When parent context is not set
      */
     public function getMessages(): array
     {
@@ -142,8 +193,7 @@ abstract class AbstractMemoryDriver implements MemoryDriverInterface
     /**
      * Clear all messages from the chat history.
      *
-     * @return void
-     * @throws \RuntimeException
+     * @throws \RuntimeException When parent context is not set
      */
     public function clear(): void
     {
@@ -157,77 +207,43 @@ abstract class AbstractMemoryDriver implements MemoryDriverInterface
             ->delete();
     }
 
-    /**
-     * Store a memory.
-     *
-     * @param string $key
-     * @param mixed $value
-     * @return bool
-     */
-    abstract public function store(string $key, mixed $value): bool;
+    // endregion
+
+    // region Content Formatting
 
     /**
-     * Retrieve a memory.
+     * Format media content for storage or retrieval.
      *
-     * @param string $key
-     * @return mixed
+     * @param array $message The message to format
+     * @return array The formatted message
      */
-    abstract public function retrieve(string $key): mixed;
-
-    /**
-     * Check if a memory exists.
-     *
-     * @param string $key
-     * @return bool
-     */
-    abstract public function exists(string $key): bool;
-
-    /**
-     * Delete a memory.
-     *
-     * @param string $key
-     * @return bool
-     */
-    abstract public function delete(string $key): bool;
-
-    /**
-     * Format the role for the specific driver.
-     *
-     * @param string $role
-     * @return string
-     */
-    abstract protected function formatRole(string $role): string;
-
-    /**
-     * Format a message for the specific driver.
-     *
-     * @param Memory $message
-     * @return array
-     */
-    abstract protected function formatMessage(Memory $message): array;
-
-    /**
-     * Get the name of the driver.
-     *
-     * @return string
-     */
-    abstract protected function getDriverName(): string;
-
-    public function addUserMessage(string $content, ?string $type = 'text', array $metadata = [], ?string $messageId = null): void
+    protected function formatMediaContent(array $message): array
     {
-        $this->addMessage('user', $content, $type, $metadata, $messageId);
+        if ($message['type'] === 'text') {
+            return $message;
+        }
+
+        $content = [];
+        if (isset($message['content'])) {
+            foreach ((array) $message['content'] as $part) {
+                if (is_string($part)) {
+                    $content[] = ['type' => 'text', 'text' => $part];
+                } else {
+                    $content[] = $part;
+                }
+            }
+        }
+
+        $message['content'] = $content;
+        return $message;
     }
 
-    public function addAssistantMessage(string $content, ?string $type = 'text', array $metadata = [], ?string $messageId = null): void
-    {
-        $this->addMessage('assistant', $content, $type, $metadata, $messageId);
-    }
-
-    public function addSystemMessage(string $content, ?string $type = 'text', array $metadata = [], ?string $messageId = null): void
-    {
-        $this->addMessage('system', $content, $type, $metadata, $messageId);
-    }
-
+    /**
+     * Format image content for storage or retrieval.
+     *
+     * @param array $message The message containing image content
+     * @return array The formatted image content
+     */
     protected function formatImageContent(array $message): array
     {
         $content = [];
@@ -246,6 +262,12 @@ abstract class AbstractMemoryDriver implements MemoryDriverInterface
         return $content;
     }
 
+    /**
+     * Format audio content for storage or retrieval.
+     *
+     * @param array $message The message containing audio content
+     * @return array The formatted audio content
+     */
     protected function formatAudioContent(array $message): array
     {
         $content = [
@@ -269,6 +291,12 @@ abstract class AbstractMemoryDriver implements MemoryDriverInterface
         return $content;
     }
 
+    /**
+     * Format video content for storage or retrieval.
+     *
+     * @param array $message The message containing video content
+     * @return array The formatted video content
+     */
     protected function formatVideoContent(array $message): array
     {
         $content = [
@@ -302,4 +330,6 @@ abstract class AbstractMemoryDriver implements MemoryDriverInterface
 
         return $content;
     }
+
+    // endregion
 }

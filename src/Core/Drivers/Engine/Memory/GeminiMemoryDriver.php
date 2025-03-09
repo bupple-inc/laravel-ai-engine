@@ -25,59 +25,6 @@ class GeminiMemoryDriver extends AbstractMemoryDriver
     }
 
     /**
-     * Store a memory using Gemini embeddings.
-     *
-     * @param string $key
-     * @param mixed $value
-     * @return bool
-     */
-    public function store(string $key, mixed $value): bool
-    {
-        // Implementation will use Gemini embeddings to store memory
-        // This is a placeholder for the actual implementation
-        return true;
-    }
-
-    /**
-     * Retrieve a memory using Gemini embeddings.
-     *
-     * @param string $key
-     * @return mixed
-     */
-    public function retrieve(string $key): mixed
-    {
-        // Implementation will use Gemini embeddings to retrieve memory
-        // This is a placeholder for the actual implementation
-        return null;
-    }
-
-    /**
-     * Check if a memory exists.
-     *
-     * @param string $key
-     * @return bool
-     */
-    public function exists(string $key): bool
-    {
-        // Implementation will check if memory exists
-        // This is a placeholder for the actual implementation
-        return false;
-    }
-
-    /**
-     * Delete a memory.
-     *
-     * @param string $key
-     * @return bool
-     */
-    public function delete(string $key): bool
-    {
-        // Implementation will delete memory
-        // This is a placeholder for the actual implementation
-        return true;
-    }
-
-    /**
      * Get the configuration for this driver.
      *
      * @return array
