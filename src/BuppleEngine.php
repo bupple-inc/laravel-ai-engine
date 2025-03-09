@@ -34,11 +34,11 @@ class BuppleEngine
     protected ?JsonParserHelper $jsonParserHelper = null;
 
     /**
-     * The active chat driver instances.
+     * The active engine driver instances.
      *
      * @var array<string, EngineDriverInterface>
      */
-    protected array $chatDrivers = [];
+    protected array $engineDrivers = [];
 
     /**
      * Create a new engine instance.
@@ -58,28 +58,20 @@ class BuppleEngine
     }
 
     /**
-     * Get a chat driver instance.
+     * Get an engine driver instance.
      *
      * @param string|null $name
      * @return EngineDriverInterface
      */
-    public function ai(?string $name = null): EngineDriverInterface
+    public function engine(?string $name = null): EngineDriverInterface
     {
-        $name = $name ?? $this->getDefaultChatDriver();
+        $name = $name ?? $this->getDefaultEngineDriver();
 
-        if (!isset($this->chatDrivers[$name])) {
-            $this->chatDrivers[$name] = $this->createChatDriver($name);
+        if (!isset($this->engineDrivers[$name])) {
+            $this->engineDrivers[$name] = $this->createEngineDriver($name);
         }
 
-        return $this->chatDrivers[$name];
-    }
-
-    /**
-     * Alias for ai() method for backward compatibility.
-     */
-    public function chat(?string $name = null): EngineDriverInterface
-    {
-        return $this->ai($name);
+        return $this->engineDrivers[$name];
     }
 
     /**
@@ -107,14 +99,6 @@ class BuppleEngine
     }
 
     /**
-     * Parse JSON string.
-     */
-    public function jsonParser(string $json): ?array
-    {
-        return $this->jsonParserHelper()->parse($json);
-    }
-
-    /**
      * Get a memory driver instance.
      *
      * @param string|null $driver
@@ -126,17 +110,17 @@ class BuppleEngine
     }
 
     /**
-     * Get the default chat driver name.
+     * Get the default engine driver name.
      */
-    protected function getDefaultChatDriver(): string
+    protected function getDefaultEngineDriver(): string
     {
-        return $this->config['default']['chat'] ?? 'openai';
+        return $this->config['default']['engine'] ?? 'openai';
     }
 
     /**
-     * Create a new chat driver instance.
+     * Create a new engine driver instance.
      */
-    protected function createChatDriver(string $driver): EngineDriverInterface
+    protected function createEngineDriver(string $driver): EngineDriverInterface
     {
         $config = $this->config[$driver] ?? [];
 

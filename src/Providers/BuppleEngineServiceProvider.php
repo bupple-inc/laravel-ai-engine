@@ -16,7 +16,7 @@ class BuppleEngineServiceProvider extends ServiceProvider implements DeferrableP
     public function register(): void
     {
         $this->app->singleton(MemoryManager::class, function ($app) {
-            return new MemoryManager($app['config']->get('bupple-engine.memory', []));
+            return new MemoryManager($app['config']->get('bupple-engine', []));
         });
 
         $this->app->singleton(BuppleEngine::class, function ($app) {
@@ -32,11 +32,6 @@ class BuppleEngineServiceProvider extends ServiceProvider implements DeferrableP
         $this->app->bind(MemoryDriverInterface::class, function ($app) {
             return $app->make(MemoryManager::class)->driver();
         });
-
-        $this->mergeConfigFrom(
-            __DIR__ . '/../config/auth.php',
-            'auth'
-        );
     }
 
     /**
@@ -48,7 +43,7 @@ class BuppleEngineServiceProvider extends ServiceProvider implements DeferrableP
             __DIR__ . '/../config/bupple-engine.php' => config_path('bupple-engine.php'),
         ]);
 
-        if (!config('bupple-engine.database.use_mongodb', false)) {
+        if (!config('bupple-engine.database.mongodb_enabled', false)) {
             $this->publishes([
                 __DIR__ . '/../database/migrations' => database_path('migrations'),
             ]);

@@ -3,6 +3,9 @@
 namespace BuppleEngine\Core\Drivers\Memory;
 
 use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
+use BuppleEngine\Core\Drivers\Engine\Memory\OpenAIMemoryDriver;
+use BuppleEngine\Core\Drivers\Engine\Memory\GeminiMemoryDriver;
+use BuppleEngine\Core\Drivers\Engine\Memory\ClaudeMemoryDriver;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -66,7 +69,7 @@ class MemoryManager
      */
     public function getDefaultDriver(): string
     {
-        return $this->config['default']['memory'] ?? 'openai';
+        return $this->config['default']['engine'] ?? 'openai';
     }
 
     /**
@@ -77,7 +80,7 @@ class MemoryManager
      */
     public function setDefaultDriver(string $name): void
     {
-        $this->config['default']['memory'] = $name;
+        $this->config['default']['engine'] = $name;
     }
 
     /**
@@ -89,12 +92,13 @@ class MemoryManager
      */
     protected function createDriver(string $driver): MemoryDriverInterface
     {
+        // Use the engine's configuration directly
         $config = $this->config[$driver] ?? [];
 
         $driverClass = match ($driver) {
-            'openai' => __NAMESPACE__ . '\\OpenAIMemoryDriver',
-            'gemini' => __NAMESPACE__ . '\\GeminiMemoryDriver',
-            'claude' => __NAMESPACE__ . '\\ClaudeMemoryDriver',
+            'openai' => OpenAIMemoryDriver::class,
+            'gemini' => GeminiMemoryDriver::class,
+            'claude' => ClaudeMemoryDriver::class,
             default => throw new InvalidArgumentException("Memory driver [{$driver}] not supported."),
         };
 
