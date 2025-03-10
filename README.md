@@ -109,18 +109,18 @@ php artisan vendor:publish --provider="Bupple\Engine\Providers\BuppleEngineServi
 ### Basic Usage
 
 ```php
-use Bupple\Engine\Facades\BuppleEngine;
+use Bupple\Engine\Facades\Engine;
 
 // Simple chat completion
-$response = BuppleEngine::engine()->send([
+$response = Engine::engine()->send([
     ['role' => 'user', 'content' => 'Hello!']
 ]);
 
 // Using memory management
-$memory = BuppleEngine::memory();
+$memory = Engine::memory();
 $memory->setParent('conversation', $conversationId);
 $memory->addMessage('user', 'What is the capital of France?');
-$response = BuppleEngine::engine()->send($memory->getMessages());
+$response = Engine::engine()->send($memory->getMessages());
 ```
 
 For more examples and detailed documentation, visit our [documentation site](https://laravel-ai-engine.bupple.io/).
