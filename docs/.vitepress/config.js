@@ -12,70 +12,43 @@ export default {
     logo: 'https://framerusercontent.com/images/CnM2ZH7e8kIXeOBCOJ7CnBzI4A.png',
     nav: [
       { text: 'Home', link: '/' },
-      { 
-        text: '0.1.0', 
-        items: [
-          { text: 'v0.1.0 (Current)', link: '/v/0.1.0/guide/getting-started/introduction' },
-          { text: 'Release Notes', link: '/v/0.1.0/release-notes' }
-        ]
-      },
-      { text: 'API Reference', link: '/v/0.1.0/api/overview' },
+      { text: 'Guide', link: '/v/0.1.0/getting-started/requirements' },
+      { text: 'API', link: '/v/0.1.0/api-reference/overview' },
       { text: 'Changelog', link: '/changelogs' },
-      { 
-        text: 'Links',
-        items: [
-          { text: 'GitHub', link: 'https://github.com/bupple-inc/laravel-ai-engine' },
-          { text: 'Packagist', link: 'https://packagist.org/packages/bupple/laravel-ai-engine' },
-          { text: 'Bupple', link: 'https://bupple.io' }
-        ]
-      }
     ],
     sidebar: {
       '/v/0.1.0/': [
         {
           text: 'Getting Started',
           items: [
-            { text: 'Introduction', link: '/v/0.1.0/guide/getting-started/introduction' },
-            { text: 'Installation', link: '/v/0.1.0/guide/getting-started/installation' },
-            { text: 'Configuration', link: '/v/0.1.0/guide/getting-started/configuration' }
+            { text: 'Requirements', link: '/v/0.1.0/getting-started/requirements' },
+            { text: 'Installation', link: '/v/0.1.0/getting-started/installation' },
+            { text: 'Configuration', link: '/v/0.1.0/getting-started/configuration' },
           ]
         },
         {
-          text: 'Core Concepts',
+          text: 'Basic Usage',
           items: [
-            { text: 'AI Providers', link: '/v/0.1.0/guide/core/ai-providers' },
-            { text: 'Memory Management', link: '/v/0.1.0/guide/core/memory-management' },
-            { text: 'Streaming', link: '/v/0.1.0/guide/core/streaming' }
+            { text: 'Engine', link: '/v/0.1.0/basic-usage/engine' },
+            { text: 'Memory', link: '/v/0.1.0/basic-usage/memory' },
+            { text: 'SSE', link: '/v/0.1.0/basic-usage/sse' },
           ]
         },
         {
-          text: 'Advanced Topics',
+          text: 'Advanced Usage',
           items: [
-            { text: 'Error Handling', link: '/v/0.1.0/guide/advanced/error-handling' },
-            { text: 'Best Practices', link: '/v/0.1.0/guide/advanced/best-practices' }
+            { text: 'Engine', link: '/v/0.1.0/advanced-usage/engine' },
+            { text: 'Memory', link: '/v/0.1.0/advanced-usage/memory' },
+            { text: 'SSE', link: '/v/0.1.0/advanced-usage/sse' },
+            { text: 'Error Handling', link: '/v/0.1.0/advanced-usage/error-handling' },
           ]
         },
         {
           text: 'API Reference',
           items: [
-            { text: 'Overview', link: '/v/0.1.0/api/overview' },
-            {
-              text: 'Interfaces',
-              collapsed: false,
-              items: [
-                { text: 'AI Interface', link: '/v/0.1.0/api/interfaces/ai-interface' },
-                { text: 'Memory Interface', link: '/v/0.1.0/api/interfaces/memory-interface' }
-              ]
-            },
-            {
-              text: 'Providers',
-              collapsed: false,
-              items: [
-                { text: 'OpenAI', link: '/v/0.1.0/api/providers/openai' },
-                { text: 'Gemini', link: '/v/0.1.0/api/providers/gemini' },
-                { text: 'Claude', link: '/v/0.1.0/api/providers/claude' }
-              ]
-            }
+            { text: 'Overview', link: '/v/0.1.0/api-reference/overview' },
+            { text: 'Engine', link: '/v/0.1.0/api-reference/engine-interface'},
+            { text: 'Memory', link: '/v/0.1.0/api-reference/memory-interface' },
           ]
         }
       ]
