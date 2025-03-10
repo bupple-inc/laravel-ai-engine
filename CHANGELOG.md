@@ -22,48 +22,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive test coverage
 - API documentation improvements
 
-## [0.1.0] - 2024-03-14
+## [0.1.0] - 2025-03-10
 
 ### Added
-- Initial release with support for multiple AI providers:
-  - OpenAI (GPT-4, GPT-3.5) integration
+- Initial release of Bupple Engine
+- Support for multiple AI engines:
+  - OpenAI (GPT-4) integration
   - Google Gemini integration
   - Anthropic Claude integration
-- Built-in memory management system with:
+- Memory management system with multiple drivers:
+  - File-based storage
+  - Database storage (MySQL/PostgreSQL)
   - MongoDB support
-  - Parent context support
-  - Message history tracking
-- Server-Sent Events (SSE) implementation with:
-  - Custom event types
-  - Message IDs
-  - Retry timeout configuration
-  - Custom headers support
-  - Batch message sending
-  - Keep-alive functionality
-  - Error handling
-  - Auto-flush control
-- Facade and dependency injection support
-- Basic error handling and retry mechanisms
-- Configuration system with environment variables support
-- Consistent response format across all providers
-
-### Features
-- Unified interface for all AI providers
-- Built-in streaming capabilities
-- Memory management with database storage
-- Provider-specific optimizations
-- Laravel integration with service provider
-- Configuration publishing
-- Database migrations for memory storage
-
-### Documentation
-- Initial README with comprehensive documentation
-- Installation instructions
-- Configuration guide
-- Basic usage examples
-- Advanced features documentation
-- Best practices guide
-- Troubleshooting section
+  - Redis storage
+- Server-Sent Events (SSE) streaming support
+- Flexible configuration system
+- Core features:
+  - Message handling
+  - Context management
+  - Media content support (text, images, audio)
+  - JSON parsing utilities
+- Basic error handling and logging
+- Comprehensive documentation
 
 [Unreleased]: https://github.com/bupple-inc/laravel-ai-engine/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/bupple-inc/laravel-ai-engine/releases/tag/v0.1.0 
