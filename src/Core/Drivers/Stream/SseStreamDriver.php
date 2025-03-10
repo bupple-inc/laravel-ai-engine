@@ -1,6 +1,6 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Stream;
+namespace Bupple\Engine\Core\Drivers\Stream;
 
 class SseStreamDriver
 {

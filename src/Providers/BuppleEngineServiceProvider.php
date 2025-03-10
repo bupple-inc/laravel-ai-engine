@@ -1,10 +1,10 @@
 <?php
 
-namespace BuppleEngine\Providers;
+namespace Bupple\Engine\Providers;
 
-use BuppleEngine\BuppleEngine;
-use BuppleEngine\Core\Drivers\Memory\MemoryManager;
-use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
+use Bupple\Engine\BuppleEngine;
+use Bupple\Engine\Core\Drivers\Memory\MemoryManager;
+use Bupple\Engine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
@@ -16,7 +16,7 @@ class BuppleEngineServiceProvider extends ServiceProvider implements DeferrableP
     public function register(): void
     {
         $this->app->singleton(MemoryManager::class, function ($app) {
-            return new MemoryManager($app['config']->get('bupple-engine', []));
+            return new MemoryManager($app['config']->get('bupple-engine.memory', []));
         });
 
         $this->app->singleton(BuppleEngine::class, function ($app) {
@@ -42,12 +42,9 @@ class BuppleEngineServiceProvider extends ServiceProvider implements DeferrableP
         $this->publishes([
             __DIR__ . '/../config/bupple-engine.php' => config_path('bupple-engine.php'),
         ]);
-
-        if (!config('bupple-engine.database.mongodb_enabled', false)) {
-            $this->publishes([
-                __DIR__ . '/../database/migrations' => database_path('migrations'),
-            ]);
-        }
+        $this->publishes([
+            __DIR__ . '/../database/migrations' => database_path('migrations'),
+        ]);
     }
 
     /**

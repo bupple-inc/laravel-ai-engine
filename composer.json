@@ -10,12 +10,12 @@
   },
   "autoload": {
     "psr-4": {
-      "BuppleEngine\\": "src/"
+      "Bupple\\Engine\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "BuppleEngine\\Tests\\": "tests/"
+      "Bupple\\Engine\\Tests\\": "tests/"
     }
   },
   "authors": [
@@ -45,10 +45,10 @@
   "extra": {
     "laravel": {
       "providers": [
-        "BuppleEngine\\Providers\\BuppleEngineServiceProvider"
+        "Bupple\\Engine\\Providers\\BuppleEngineServiceProvider"
       ],
       "aliases": {
-        "BuppleEngine": "BuppleEngine\\Facades\\BuppleEngine"
+        "Engine": "Bupple\\Engine\\Facades\\Engine"
       }
     }
   },

@@ -3,7 +3,7 @@
 namespace Bupple\Engine\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use BuppleEngine\Providers\BuppleEngineServiceProvider;
+use Bupple\Engine\Providers\BuppleEngineServiceProvider;
 
 abstract class TestCase extends Orchestra
 {

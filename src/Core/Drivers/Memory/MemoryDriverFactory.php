@@ -1,11 +1,11 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Memory;
+namespace Bupple\Engine\Core\Drivers\Memory;
 
 use InvalidArgumentException;
-use BuppleEngine\Core\Drivers\Engine\OpenAI\OpenAIMemoryDriver;
-use BuppleEngine\Core\Drivers\Engine\Gemini\GeminiMemoryDriver;
-use BuppleEngine\Core\Drivers\Engine\Claude\ClaudeMemoryDriver;
+use Bupple\Engine\Core\Drivers\Engine\OpenAI\OpenAIMemoryDriver;
+use Bupple\Engine\Core\Drivers\Engine\Gemini\GeminiMemoryDriver;
+use Bupple\Engine\Core\Drivers\Engine\Claude\ClaudeMemoryDriver;
 
 class MemoryDriverFactory
 {

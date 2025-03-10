@@ -1,6 +1,6 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Engine\Contracts;
+namespace Bupple\Engine\Core\Drivers\Engine\Contracts;
 
 interface EngineDriverInterface
 {

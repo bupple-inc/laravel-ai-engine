@@ -1,6 +1,6 @@
 <?php
 
-namespace BuppleEngine\Core\Helpers;
+namespace Bupple\Engine\Core\Helpers;
 
 class JsonParserHelper
 {

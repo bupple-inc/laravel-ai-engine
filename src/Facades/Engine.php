@@ -1,12 +1,12 @@
 <?php
 
-namespace BuppleEngine\Facades;
+namespace Bupple\Engine\Facades;
 
-use BuppleEngine\Core\Drivers\Engine\Contracts\EngineDriverInterface;
-use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
-use BuppleEngine\Core\Drivers\Memory\MemoryManager;
-use BuppleEngine\Core\Drivers\Stream\SseStreamDriver;
-use BuppleEngine\Core\Helpers\JsonParserHelper;
+use Bupple\Engine\Core\Drivers\Engine\Contracts\EngineDriverInterface;
+use Bupple\Engine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
+use Bupple\Engine\Core\Drivers\Memory\MemoryManager;
+use Bupple\Engine\Core\Drivers\Stream\SseStreamDriver;
+use Bupple\Engine\Core\Helpers\JsonParserHelper;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static JsonParserHelper jsonParserHelper()
  * @method static mixed config(string|null $key = null, mixed $default = null)
  * 
- * @see \BuppleEngine\BuppleEngine
+ * @see \Bupple\Engine\BuppleEngine
  */
-class BuppleEngine extends Facade
+class Engine extends Facade
 {
     /**
      * Get the registered name of the component.

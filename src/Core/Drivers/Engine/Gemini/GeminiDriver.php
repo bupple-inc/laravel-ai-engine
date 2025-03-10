@@ -1,9 +1,9 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Engine\Gemini;
+namespace Bupple\Engine\Core\Drivers\Engine\Gemini;
 
-use BuppleEngine\Core\Drivers\Engine\AbstractEngineDriver;
-use BuppleEngine\Core\Drivers\Engine\Gemini\GeminiMemoryDriver;
+use Bupple\Engine\Core\Drivers\Engine\AbstractEngineDriver;
+use Bupple\Engine\Core\Drivers\Engine\Gemini\GeminiMemoryDriver;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 

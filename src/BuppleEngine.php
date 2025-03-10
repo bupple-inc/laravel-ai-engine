@@ -1,15 +1,15 @@
 <?php
 
-namespace BuppleEngine;
+namespace Bupple\Engine;
 
-use BuppleEngine\Core\Drivers\Engine\Claude\ClaudeDriver;
-use BuppleEngine\Core\Drivers\Engine\Contracts\EngineDriverInterface;
-use BuppleEngine\Core\Drivers\Engine\Gemini\GeminiDriver;
-use BuppleEngine\Core\Drivers\Engine\OpenAI\OpenAIDriver;
-use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
-use BuppleEngine\Core\Drivers\Memory\MemoryManager;
-use BuppleEngine\Core\Drivers\Stream\SseStreamDriver;
-use BuppleEngine\Core\Helpers\JsonParserHelper;
+use Bupple\Engine\Core\Drivers\Engine\Claude\ClaudeDriver;
+use Bupple\Engine\Core\Drivers\Engine\Contracts\EngineDriverInterface;
+use Bupple\Engine\Core\Drivers\Engine\Gemini\GeminiDriver;
+use Bupple\Engine\Core\Drivers\Engine\OpenAI\OpenAIDriver;
+use Bupple\Engine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
+use Bupple\Engine\Core\Drivers\Memory\MemoryManager;
+use Bupple\Engine\Core\Drivers\Stream\SseStreamDriver;
+use Bupple\Engine\Core\Helpers\JsonParserHelper;
 
 class BuppleEngine
 {
@@ -114,7 +114,7 @@ class BuppleEngine
      */
     protected function getDefaultEngineDriver(): string
     {
-        return $this->config['default']['engine'] ?? 'openai';
+        return $this->config['engine']['default'] ?? 'openai';
     }
 
     /**
@@ -122,7 +122,7 @@ class BuppleEngine
      */
     protected function createEngineDriver(string $driver): EngineDriverInterface
     {
-        $config = $this->config[$driver] ?? [];
+        $config = $this->config['engine'][$driver] ?? [];
 
         return match ($driver) {
             'openai' => new OpenAIDriver($config),

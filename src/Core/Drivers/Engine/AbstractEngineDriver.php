@@ -1,8 +1,8 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Engine;
+namespace Bupple\Engine\Core\Drivers\Engine;
 
-use BuppleEngine\Core\Drivers\Engine\Contracts\EngineDriverInterface;
+use Bupple\Engine\Core\Drivers\Engine\Contracts\EngineDriverInterface;
 use GuzzleHttp\Client;
 
 abstract class AbstractEngineDriver implements EngineDriverInterface

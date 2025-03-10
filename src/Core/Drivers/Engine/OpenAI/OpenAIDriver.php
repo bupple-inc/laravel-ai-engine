@@ -1,9 +1,9 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Engine\OpenAI;
+namespace Bupple\Engine\Core\Drivers\Engine\OpenAI;
 
-use BuppleEngine\Core\Drivers\Engine\AbstractEngineDriver;
-use BuppleEngine\Core\Drivers\Engine\OpenAI\OpenAIMemoryDriver;
+use Bupple\Engine\Core\Drivers\Engine\AbstractEngineDriver;
+use Bupple\Engine\Core\Drivers\Engine\OpenAI\OpenAIMemoryDriver;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 

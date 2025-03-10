@@ -1,9 +1,9 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Engine\Gemini;
+namespace Bupple\Engine\Core\Drivers\Engine\Gemini;
 
-use BuppleEngine\Core\Models\Memory;
-use BuppleEngine\Core\Drivers\Memory\AbstractMemoryDriver;
+use Bupple\Engine\Core\Models\Memory;
+use Bupple\Engine\Core\Drivers\Memory\AbstractMemoryDriver;
 
 class GeminiMemoryDriver extends AbstractMemoryDriver
 {

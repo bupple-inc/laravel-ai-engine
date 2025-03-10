@@ -1,12 +1,12 @@
 <?php
 
-namespace BuppleEngine\Core\Models;
+namespace Bupple\Engine\Core\Models;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 use MongoDB\Laravel\Eloquent\Model as MongoDBModel;
 use RuntimeException;
 
-if (config('bupple-engine.database.mongodb_enabled')) {
+if (config('bupple-engine.memory.database.mongodb_enabled')) {
     if (!class_exists(MongoDBModel::class)) {
         throw new RuntimeException(
             'MongoDB support is enabled but the package "mongodb/laravel-mongodb" is not installed. ' .
@@ -18,9 +18,9 @@ if (config('bupple-engine.database.mongodb_enabled')) {
         public function __construct(array $attributes = [])
         {
             parent::__construct($attributes);
-            $this->setConnection(config('bupple-engine.database.connection'));
+            $this->setConnection(config('bupple-engine.memory.database.connection'));
+            $this->setTable(config('bupple-engine.memory.database.table_name'));
         }
-        protected $table = 'engine_memory';
 
         protected $fillable = [
             'parent_class',
@@ -53,10 +53,9 @@ if (config('bupple-engine.database.mongodb_enabled')) {
         public function __construct(array $attributes = [])
         {
             parent::__construct($attributes);
-            $this->setConnection(config('bupple-engine.database.connection'));
+            $this->setConnection(config('bupple-engine.memory.database.connection'));
+            $this->setTable(config('bupple-engine.memory.database.table_name'));
         }
-
-        protected $table = 'engine_memory';
 
         protected $fillable = [
             'parent_class',

@@ -1,9 +1,9 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Engine\Claude;
+namespace Bupple\Engine\Core\Drivers\Engine\Claude;
 
-use BuppleEngine\Core\Models\Memory;
-use BuppleEngine\Core\Drivers\Memory\AbstractMemoryDriver;
+use Bupple\Engine\Core\Models\Memory;
+use Bupple\Engine\Core\Drivers\Memory\AbstractMemoryDriver;
 
 class ClaudeMemoryDriver extends AbstractMemoryDriver
 {

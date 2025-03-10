@@ -1,9 +1,9 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Engine\OpenAI;
+namespace Bupple\Engine\Core\Drivers\Engine\OpenAI;
 
-use BuppleEngine\Core\Models\Memory;
-use BuppleEngine\Core\Drivers\Memory\AbstractMemoryDriver;
+use Bupple\Engine\Core\Models\Memory;
+use Bupple\Engine\Core\Drivers\Memory\AbstractMemoryDriver;
 
 class OpenAIMemoryDriver extends AbstractMemoryDriver
 {

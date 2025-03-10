@@ -8,7 +8,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create(config('bupple-engine.database.memory_table'), function (Blueprint $table) {
+        if (config('bupple-engine.memory.database.mongodb_enabled')) {
+            return;
+        }
+
+        Schema::create(config('bupple-engine.memory.database.table_name'), function (Blueprint $table) {
             $table->id();
             $table->string('parent_class');
             $table->string('parent_id');
@@ -26,6 +30,10 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists(config('bupple-engine.database.memory_table'));
+        if (config('bupple-engine.memory.database.mongodb_enabled')) {
+            return;
+        }
+
+        Schema::dropIfExists(config('bupple-engine.memory.database.table_name'));
     }
 };

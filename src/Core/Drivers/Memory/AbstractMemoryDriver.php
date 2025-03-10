@@ -1,9 +1,9 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Memory;
+namespace Bupple\Engine\Core\Drivers\Memory;
 
-use BuppleEngine\Core\Models\Memory;
-use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
+use Bupple\Engine\Core\Models\Memory;
+use Bupple\Engine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
 
 /**
  * Abstract Memory Driver
@@ -11,7 +11,7 @@ use BuppleEngine\Core\Drivers\Memory\Contracts\MemoryDriverInterface;
  * This abstract class provides a base implementation for memory drivers in the Bupple Engine.
  * It handles message management, content formatting, and basic memory operations.
  * 
- * @package BuppleEngine\Core\Drivers\Memory
+ * @package Bupple\Engine\Core\Drivers\Memory
  */
 abstract class AbstractMemoryDriver implements MemoryDriverInterface
 {

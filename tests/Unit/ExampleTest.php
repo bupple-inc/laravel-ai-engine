@@ -1,9 +1,9 @@
 <?php
 
-use BuppleEngine\Facades\BuppleEngine;
+use Bupple\Engine\Facades\Engine;
 
 test('bupple engine facade is registered', function () {
-    expect(class_exists(BuppleEngine::class))->toBeTrue();
+    expect(class_exists(Engine::class))->toBeTrue();
 });
 
 test('bupple engine service provider is registered', function () {

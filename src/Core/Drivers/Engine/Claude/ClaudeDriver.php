@@ -1,9 +1,9 @@
 <?php
 
-namespace BuppleEngine\Core\Drivers\Engine\Claude;
+namespace Bupple\Engine\Core\Drivers\Engine\Claude;
 
-use BuppleEngine\Core\Drivers\Engine\AbstractEngineDriver;
-use BuppleEngine\Core\Drivers\Engine\Claude\ClaudeMemoryDriver;
+use Bupple\Engine\Core\Drivers\Engine\AbstractEngineDriver;
+use Bupple\Engine\Core\Drivers\Engine\Claude\ClaudeMemoryDriver;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
